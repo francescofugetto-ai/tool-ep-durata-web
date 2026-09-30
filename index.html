@@ -1,0 +1,1027 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Tool EP durata">
+<meta name="theme-color" content="#FAF9F7">
+<script data-iphone="sentinella">
+(function(){
+var h=document.documentElement, msg="";
+function ha(c){ return (" "+h.className+" ").indexOf(" "+c+" ")>=0; }
+// L'errore puo' arrivare prima che l'avviso esista — uno script in <head> che
+// non si lascia leggere —: il messaggio si tiene da parte e si scrive quando
+// la pagina c'e'.
+function scrivi(){
+  var e=document.getElementById("nmerr");
+  if(e&&msg) e.textContent="Errore del motore: "+msg;
+}
+function ko(m){
+  if(m&&!msg) msg=m;
+  if(!ha("motore-ko")) h.className+=" motore-ko";
+  scrivi();
+}
+h.className+=" js";
+window.onerror=function(m,src,riga,col){
+  m=String(m);
+  if(/^Script error\.?$/.test(m)) m="il browser non ne mostra il dettaglio (\u00abScript error.\u00bb)";
+  ko(m+(riga?" (riga "+riga+(col?", colonna "+col:"")+")":""));
+};
+document.addEventListener("DOMContentLoaded",function(){
+  if(!ha("motore-ok")) ko(msg||"il motore non ha completato l'avvio"); else scrivi();
+});
+})();
+</script>
+<title>EP — durata dell'anticoagulazione e fase estesa</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  :root {
+    --bg:#FFFFFF; --surface:#FFFFFF; --surface-alt:#F7F7F5;
+    --border:rgba(11,11,11,0.10); --border-strong:rgba(11,11,11,0.18);
+    --text-primary:#0B0B0B; --text-secondary:#52514E; --text-muted:#898781;
+    --accent-blue:#2A78D6;   --accent-blue-bg:#E6F1FB;   --accent-blue-border:#B5D4F4;
+    --accent-amber:#BA7517;  --accent-amber-bg:#FAEEDA;  --accent-amber-border:#FAC775;
+    --accent-red:#A32D2D;    --accent-red-bg:#FCEBEB;    --accent-red-border:#F7C1C1;
+    --accent-green:#3B6D11;  --accent-green-bg:#EAF3DE;  --accent-green-border:#C0DD97;
+    --accent-teal:#0E7C86;   --accent-teal-bg:#E2F4F5;   --accent-teal-border:#A7DBDE;
+    --accent-purple:#534AB7; --accent-purple-bg:#EEEDFE; --accent-purple-border:#CECBF6;
+    --pill-gray-bg:#F1EFE8;  --pill-gray-fg:#444441;
+    --cor-1:#3B8E5A; --cor-2a:#E0A82E; --cor-2b:#DE7E3C; --cor-3nb:#CE6D86; --cor-3h:#B33A3A;
+    --k0:#2E7D4F; --k0-bg:#E2F3E8; --k0-bd:#A6D9B8;
+    --k1:#2A78D6; --k1-bg:#E3EFFB; --k1-bd:#A9CBF1;
+    --k2:#8A6A00; --k2-bg:#FBF3C8; --k2-bd:#EBD56C;
+    --k3:#B45309; --k3-bg:#FDEBD8; --k3-bd:#F4BD85;
+    --k4:#A32D2D; --k4-bg:#FCE3E3; --k4-bd:#F0A9A9;
+    --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    --mono:ui-monospace,'SFMono-Regular',Consolas,Menlo,monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#111418; --surface:#181C22; --surface-alt:#20252D;
+      --border:rgba(255,255,255,.10); --border-strong:rgba(255,255,255,.19);
+      --text-primary:#E7EAEE; --text-secondary:#B8BEC7; --text-muted:#949BA5;
+      --accent-blue:#72AAEE;   --accent-blue-bg:#18283A;   --accent-blue-border:#2E4B6C;
+      --accent-amber:#E3A94F;  --accent-amber-bg:#30250F;  --accent-amber-border:#5D4719;
+      --accent-red:#EF8E8E;    --accent-red-bg:#361B1B;    --accent-red-border:#6B3232;
+      --accent-green:#95C873;  --accent-green-bg:#1C2A13;  --accent-green-border:#3C5626;
+      --accent-teal:#6FC7CE;   --accent-teal-bg:#12292B;   --accent-teal-border:#2A5559;
+      --accent-purple:#ADA6F2; --accent-purple-bg:#23213B; --accent-purple-border:#454077;
+      --pill-gray-bg:#2A2F37;  --pill-gray-fg:#C9CED6;
+      --k0:#8FD3A8; --k0-bg:#132B1D; --k0-bd:#2D5A3E;
+      --k1:#8EC0F5; --k1-bg:#16283C; --k1-bd:#2F5378;
+      --k2:#EDD36A; --k2-bg:#2C260C; --k2-bd:#5E5120;
+      --k3:#F3B27A; --k3-bg:#33210F; --k3-bd:#6B4524;
+      --k4:#F29A9A; --k4-bg:#361B1B; --k4-bd:#6B3232;
+      color-scheme:dark;
+    }
+  }
+  body { font-family:var(--font); background:var(--bg); color:var(--text-primary); font-size:14.5px; line-height:1.65; -webkit-font-smoothing:antialiased; }
+  .page { max-width:920px; margin:0 auto; padding:0 16px 4rem; }
+  strong, b { font-weight:600; }
+  .muted { color:var(--text-muted); }
+
+  /* ── intestazione ── */
+  .hero { padding:2rem 0 1.1rem; border-bottom:1px solid var(--border); }
+  .kicker { font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px; }
+  .headline { font-size:26px; font-weight:600; line-height:1.22; margin-bottom:10px; }
+  .lede { font-size:13.5px; color:var(--text-secondary); line-height:1.65; margin-bottom:12px; max-width:780px; }
+  .lede strong { color:var(--text-primary); }
+  .meta-row { display:flex; flex-wrap:wrap; gap:6px 8px; font-size:12px; }
+  .meta-chip { background:var(--surface); border:1px solid var(--border-strong); border-radius:99px; padding:2px 10px; color:var(--text-secondary); overflow-wrap:anywhere; }
+  .meta-chip strong { color:var(--text-primary); }
+
+  /* ── barra sticky ── */
+  .bar { position:-webkit-sticky;position:sticky; top:0; z-index:30; background:var(--bg); border-bottom:1px solid var(--border-strong);
+         margin:0 -16px 1rem; padding:8px 16px; display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px; }
+  .bar .lbl { font-size:10.5px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--text-muted); }
+  .bar .sp { flex:1 1 auto; }
+  .btn { font:600 12px var(--font); padding:6px 12px; border-radius:99px; border:1px solid var(--border-strong); background:var(--surface); color:var(--text-secondary); cursor:pointer; }
+  .btn:hover { border-color:var(--accent-blue); color:var(--accent-blue); }
+
+  /* ── passi ── */
+  .stage { display:flex; align-items:center; gap:10px; margin:1.8rem 0 .6rem; }
+  .stage-n { width:29px; height:29px; border-radius:50%; background:var(--text-primary); color:var(--bg);
+             font-weight:700; font-size:13.5px; display:flex; align-items:center; justify-content:center; flex:0 0 auto; }
+  .stage-t { font-size:16.5px; font-weight:700; line-height:1.3; }
+  .stage-w { margin-left:auto; font-size:11.5px; color:var(--text-muted); background:var(--surface-alt); border-radius:99px; padding:3px 10px; text-align:right; }
+  .card { background:var(--surface); border:1px solid var(--border-strong); border-radius:12px; padding:14px 16px; margin-bottom:12px; }
+  .card h3 { font-size:13px; font-weight:600; letter-spacing:.02em; margin-bottom:8px; color:var(--text-secondary); }
+  .card h3 + .opz, .card h3 + .chk { margin-top:2px; }
+  .sub { font-size:10.5px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--text-muted); margin:12px 0 6px; }
+  .sub:first-child { margin-top:0; }
+
+  /* ── campi ── */
+  .opz { display:flex; align-items:flex-start; gap:9px; padding:8px 11px; border:1px solid var(--border-strong); border-radius:10px; margin-bottom:6px; cursor:pointer; background:var(--surface); }
+  .opz input { margin-top:4px; width:17px; height:17px; flex:0 0 auto; accent-color:var(--accent-teal); }
+  .opz .ot { display:block; font-size:14px; font-weight:600; line-height:1.4; }
+  .opz small { display:block; font-weight:400; color:var(--text-muted); font-size:12px; line-height:1.45; margin-top:2px; }
+  /* .on la mette il motore: niente :has(), che Safari conosce solo dalla 15.4 */
+  .opz.on { border-color:var(--accent-teal); background:var(--accent-teal-bg); }
+  .chk { display:flex; align-items:flex-start; gap:9px; padding:7px 4px; font-size:14px; line-height:1.45; border-bottom:1px dashed var(--border); cursor:pointer; }
+  .chk:last-child { border-bottom:none; }
+  .chk input { margin-top:3px; width:17px; height:17px; flex:0 0 auto; accent-color:var(--accent-teal); }
+  .chk small { display:block; color:var(--text-muted); font-size:12px; }
+  .chk.on { color:var(--accent-teal); font-weight:600; }
+  .chk.on small { font-weight:400; }
+  .cgrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(118px,1fr)); gap:8px; }
+  .cf { display:flex; flex-direction:column; gap:3px; }
+  .cf span { font-size:9.5px; font-weight:700; letter-spacing:.03em; text-transform:uppercase; color:var(--text-muted); }
+  .cf input, .cf select { font:600 14px var(--font); padding:6px 7px; border:1px solid var(--border-strong); border-radius:7px; background:var(--surface); color:var(--text-primary); width:100%; }
+  .hide { display:none !important; }
+
+  /* ── esito ── */
+  .esito { display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; margin-bottom:6px; }
+  .cat { display:inline-block; font-size:12.5px; font-weight:600; border-radius:99px; padding:2px 10px; border:1px solid; line-height:1.5; }
+  .k0 { color:var(--k0); background:var(--k0-bg); border-color:var(--k0-bd); }
+  .k1 { color:var(--k1); background:var(--k1-bg); border-color:var(--k1-bd); }
+  .k2 { color:var(--k2); background:var(--k2-bg); border-color:var(--k2-bd); }
+  .k3 { color:var(--k3); background:var(--k3-bg); border-color:var(--k3-bd); }
+  .k4 { color:var(--k4); background:var(--k4-bg); border-color:var(--k4-bd); }
+  .kx { color:var(--text-muted); background:var(--surface-alt); border-color:var(--border-strong); }
+  .big { font-size:19px; font-weight:700; line-height:1.3; }
+  .via { font-family:var(--mono); font-size:12px; color:var(--text-secondary); margin:2px 0 8px; overflow-wrap:anywhere; }
+  .pre { font-size:12.5px; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:.04em; margin-bottom:2px; }
+
+  /* ── classi: AHA/ACC nel suo sistema, ESC nel suo ── */
+  .cor { display:inline-block; min-width:26px; text-align:center; padding:0 6px; border-radius:6px; font-weight:700; font-size:10.5px; line-height:1.7; color:#fff; vertical-align:1px; white-space:nowrap; }
+  .cor-1{background:var(--cor-1);} .cor-2a{background:var(--cor-2a);color:#3A2D00;} .cor-2b{background:var(--cor-2b);} .cor-3nb{background:var(--cor-3nb);} .cor-3h{background:var(--cor-3h);}
+  .loe { display:inline-block; padding:0 7px; border-radius:99px; font-size:9.5px; font-weight:600; line-height:1.8; background:var(--pill-gray-bg); color:var(--pill-gray-fg); border:.5px solid var(--border-strong); vertical-align:1px; white-space:nowrap; }
+  .cnc { display:inline-block; padding:0 7px; border-radius:6px; font-size:10px; font-weight:600; line-height:1.8; background:var(--surface-alt); color:var(--text-secondary); border:1px solid var(--border-strong); vertical-align:1px; white-space:nowrap; }
+  .pg { font-family:var(--mono); font-size:11px; color:var(--text-muted); }
+  .prov { display:inline-block; font-size:9.5px; font-weight:700; letter-spacing:.04em; padding:0 7px; border-radius:99px; line-height:1.8; vertical-align:1px; text-transform:uppercase; white-space:nowrap; }
+  .prov-fonte { background:var(--pill-gray-bg); color:var(--pill-gray-fg); }
+  .prov-integr { background:var(--accent-blue-bg); color:var(--accent-blue); }
+  .prov-sintesi { background:var(--accent-purple-bg); color:var(--accent-purple); }
+  .prov-rcp { background:var(--accent-amber-bg); color:var(--accent-amber); }
+  .verif { color:var(--accent-blue); font-weight:700; }
+
+  .nota { border-left:3px solid var(--accent-amber); background:var(--accent-amber-bg); border-radius:0 8px 8px 0; padding:7px 11px; margin-top:8px; font-size:13.5px; }
+  .nota.info { border-left-color:var(--accent-blue); background:var(--accent-blue-bg); }
+  .nota.stop { border-left-color:var(--accent-red); background:var(--accent-red-bg); }
+  .nota.ok { border-left-color:var(--accent-green); background:var(--accent-green-bg); }
+  .nota.esc { border-left-color:var(--accent-purple); background:var(--accent-purple-bg); }
+  .nota strong { color:var(--text-primary); }
+  .etq { display:inline-block; font-size:10px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--accent-purple); margin-right:4px; }
+  .riga { display:flex; gap:10px; padding:8px 0; border-bottom:1px dashed var(--border); }
+  .riga:last-child { border-bottom:none; }
+  .riga .ico { flex:0 0 22px; font-weight:700; text-align:center; font-family:var(--mono); font-size:13px; padding-top:1px; }
+  .riga .tx { flex:1 1 auto; font-size:14px; min-width:0; overflow-wrap:anywhere; }
+  .riga.si .ico { color:var(--k0); }
+  .riga.no .ico { color:var(--text-muted); }
+  .riga.no .tx { color:var(--text-muted); }
+  .riga.nd .ico { color:var(--accent-amber); }
+  .riga .rn { font-family:var(--mono); font-size:11.5px; font-weight:600; color:var(--text-secondary); margin-right:4px; }
+  .mol { display:flex; flex-wrap:wrap; gap:2px 10px; padding:7px 0; border-bottom:1px dashed var(--border); font-size:14px; }
+  .mol:last-child { border-bottom:none; }
+  .mol .mn { font-weight:700; min-width:118px; }
+  .mol .md { flex:1 1 240px; min-width:0; overflow-wrap:anywhere; }
+  .mol .md b { color:var(--accent-teal); }
+
+  /* ── rene ── */
+  .rene { margin-top:10px; padding:9px 12px 10px; background:var(--surface-alt); border:1px solid var(--border-strong); border-radius:10px; }
+  .rl-h { font-size:10px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--text-muted); display:flex; flex-wrap:wrap; gap:4px 9px; align-items:baseline; }
+  .rl-h b { font-size:13px; font-weight:700; letter-spacing:0; text-transform:none; color:var(--accent-teal); }
+  .rl-h .rl-w { font-weight:400; letter-spacing:0; text-transform:none; font-size:11px; }
+  .rl-i { display:flex; flex-wrap:wrap; gap:3px 9px; align-items:baseline; font-size:12.5px; line-height:1.5; margin-top:6px; }
+  .rl-i .rl-m { font-weight:700; flex:0 0 auto; min-width:92px; color:var(--text-primary); }
+  .rl-i .rl-t { flex:1 1 220px; min-width:0; overflow-wrap:anywhere; }
+  .rl-warn .rl-m { color:var(--accent-amber); }
+  .rl-stop .rl-m { color:var(--accent-red); }
+  .rl-ok .rl-m { color:var(--accent-green); }
+  .rl-nd .rl-m { color:var(--text-secondary); }
+
+  .lista li { margin:4px 0 4px 18px; font-size:13.5px; }
+  .foot { margin-top:2.4rem; padding-top:1rem; border-top:1px solid var(--border-strong); font-size:12px; color:var(--text-muted); line-height:1.7; }
+  .foot strong { color:var(--text-secondary); }
+
+  @media (max-width:640px) {
+    .headline { font-size:22px; }
+    .stage-w { display:none; }
+    .big { font-size:17px; }
+    .mol .mn { min-width:0; width:100%; }
+  }
+  @media print { .bar { position:static; } .btn { display:none; } }
+  /* TOKEN-LUNGO: una sigla o un DOI non sfondano la colonna sul telefono */
+  @media (max-width:640px) { .page { overflow-wrap:anywhere; } }
+</style>
+<style data-iphone="stile">
+/* L'avviso e' visibile per costruzione: lo nasconde solo la classe che la
+   sentinella mette quando JavaScript esiste, e lo rimostra quando il motore
+   muore. Nell'anteprima dell'iPhone nessuna delle due arriva. */
+#nomotore{background:#FCEBEB;border:1.5px solid #A32D2D;border-radius:10px;
+ padding:12px 15px;margin:0 0 1.1rem;font-size:13.5px;line-height:1.6;color:#0B0B0B;
+ font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+#nomotore strong{display:block;color:#A32D2D;font-size:15px;margin-bottom:4px}
+#nomotore p{margin:6px 0 0}
+#nomotore a{color:#A32D2D}
+#nomotore .nmurl{font-family:'SFMono-Regular',Consolas,Menlo,monospace;font-size:.92em;word-break:break-all}
+#nomotore .nmerr{display:block;font-family:'SFMono-Regular',Consolas,Menlo,monospace;
+ font-size:11.5px;color:#A32D2D;margin-top:6px;word-break:break-word}
+#nomotore .nmerr:empty{display:none}
+html.js #nomotore{display:none}
+html.js.motore-ko #nomotore{display:block}
+
+#nmprivacy{background:#E2F4F5;border:1px solid #A7DBDE;border-radius:8px;padding:9px 13px;
+ margin:0 0 1rem;font-size:12.5px;line-height:1.55;color:#0B0B0B;
+ font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+@media print{#nmprivacy{display:none}}
+</style>
+</head>
+<body>
+<div class="nomotore" id="nomotore" role="alert">
+ <strong>Motore di calcolo non attivo</strong>
+ <p>I calcoli, i filtri e i comandi di questa pagina <b>non funzionano</b>: dove leggi «—» non c'è un
+ valore. Il testo resta leggibile, i numeri che dipendono dai tuoi dati no. Non usare questa pagina
+ per decidere una dose.</p>
+ <p>Su iPhone e iPad succede sempre con un file salvato sul telefono: si apre nell'<b>anteprima</b> —
+ dall'app File, da Mail, da WhatsApp —, che mostra la pagina ma non esegue il motore, e Apple non
+ permette di aprirlo in Safari. Sull'iPhone il tool funziona aperto da questo indirizzo, in Safari: <a class="nmurl" href="https://francescofugetto-ai.github.io/tool-ep-durata-web/">https://francescofugetto-ai.github.io/tool-ep-durata-web/</a> — poi Condividi, «Aggiungi alla schermata Home». Dopo la prima apertura funziona anche senza rete. Su computer e Android basta aprire il file.</p>
+ <span class="nmerr" id="nmerr"></span>
+</div>
+<div class="nmprivacy" id="nmprivacy">
+ <b>Quello che scrivi resta su questo dispositivo.</b> La pagina non invia niente in rete e non
+ salva niente: nessun dato esce da qui. Per la stessa ragione, <b>chiudendola il contenuto si
+ perde</b> — copia il referto dove ti serve prima di chiudere.
+</div>
+<div class="page">
+<header class="hero">
+  <div class="kicker">Strumento · Embolia polmonare · AHA/ACC 2026, con la ESC 2019 accanto</div>
+  <h1 class="headline">Durata dell'anticoagulazione e schema della fase estesa</h1>
+  <p class="lede"><strong>Come si usa.</strong> Alla visita che chiude la fase iniziale (3–6 mesi) lo strumento dice se <strong>sospendere</strong>, <strong>decidere con il paziente</strong> o <strong>proseguire</strong>, e con quale molecola e dose proseguire. Il passo 1 è l'episodio, il passo 2 il fattore scatenante letto sulla Tab. 9, il passo 3 ciò che cambia la molecola, il passo 4 il rene. Ogni esito porta la riga che lo sostiene, con classe e pagina; la <strong>ESC 2019</strong> compare accanto, nella sua scala, solo dove porta a una decisione diversa, e lo dice. <strong>Azzera</strong>, in alto, ricomincia.</p>
+  <div class="meta-row">
+    <span class="meta-chip"><strong>Fonte</strong> 2026 AHA/ACC Guideline for Acute Pulmonary Embolism, Circulation 2026;153:e977–e1051 · 2019 ESC Guidelines on acute PE e supplementare</span>
+    <span class="meta-chip"><strong>Calcolo</strong> raccomandazioni p. e1022 n. 1–9 · Tab. 9 p. e1023 · testo pp. e1022–e1024 · e1002 n. 7, 8, 11, 22 · ESC pp. 569, 577, 579 · Suppl. Tab. 5, 6, 8</span>
+  </div>
+</header>
+
+<div class="bar" id="bar" aria-live="polite">
+  <span class="lbl">Condotta</span> <span id="barDur" class="cat kx">—</span>
+  <span class="lbl">Fase estesa</span> <span id="barMol" class="cat kx">—</span>
+  <span class="lbl">ClCr</span> <span id="barClcr" class="cat kx">—</span>
+  <span class="sp"></span>
+  <button class="btn" id="azzera" type="button">Azzera</button>
+</div>
+
+<div class="stage"><span class="stage-n">1</span><span class="stage-t">L'episodio</span><span class="stage-w">p. e1022 · ESC p. 577</span></div>
+<div class="card">
+  <label class="opz"><input type="radio" name="ep" value="prima"><span><span class="ot">Prima EP</span><small>nessun episodio precedente di EP o di TVP</small></span></label>
+  <label class="opz"><input type="radio" name="ep" value="recidiva"><span><span class="ot">EP recidivante</span><small>almeno un episodio precedente di EP o TVP, comparso a terapia sospesa o mai trattato</small></span></label>
+  <label class="opz"><input type="radio" name="ep" value="interapia"><span><span class="ot">Recidiva in corso di anticoagulazione</span><small>la domanda non è più la durata: lo strumento rimanda alla sezione della recidiva</small></span></label>
+</div>
+
+<div class="stage"><span class="stage-n">2</span><span class="stage-t">Il fattore scatenante</span><span class="stage-w">Tab. 9, p. e1023</span></div>
+<div class="card">
+  <div class="sub">Fattore reversibile al momento dell'EP</div>
+  <label class="opz"><input type="radio" name="rev" value="nessuno"><span><span class="ot">Nessun fattore reversibile</span><small>nessuna delle voci delle due colonne qui sotto</small></span></label>
+  <label class="opz"><input type="radio" name="rev" value="minore"><span><span class="ot">Fattore minore reversibile</span><small>chirurgia in anestesia generale &lt;30 min · ricovero per malattia acuta &lt;72 h · malattia acuta fuori dall'ospedale ≥72 h costretto a letto · terapia estrogenica (sostitutiva o contraccettiva) · periodo peripartum · trauma con mobilità ridotta ≥72 h</small></span></label>
+  <label class="opz"><input type="radio" name="rev" value="maggiore"><span><span class="ot">Fattore maggiore reversibile</span><small>chirurgia in anestesia generale ≥30 min · ricovero per malattia acuta ≥72 h costretto a letto · taglio cesareo · frattura di un arto inferiore</small></span></label>
+  <div class="sub">Fattore persistente — terza colonna della Tab. 9</div>
+  <label class="chk"><input type="checkbox" id="pNeo"><span>Cancro attivo, con o senza terapia in corso<small>è anche l'ingresso della riga 5, la molecola nel cancro</small></span></label>
+  <label class="chk"><input type="checkbox" id="pAutoimm"><span>Malattia autoimmune<small>per esempio artrite reumatoide, lupus eritematoso sistemico</small></span></label>
+  <label class="chk"><input type="checkbox" id="pMici"><span>Malattia infiammatoria cronica intestinale</span></label>
+  <label class="chk"><input type="checkbox" id="pImmob"><span>Immobilità cronica</span></label>
+</div>
+
+<div class="stage"><span class="stage-n">3</span><span class="stage-t">Che cosa cambia la molecola</span><span class="stage-w">e1002 n. 7–8 · e1022 n. 4–9</span></div>
+<div class="card">
+  <label class="chk"><input type="checkbox" id="apsC"><span>Sindrome da antifosfolipidi trombotica conclamata<small>e1002 n. 7</small></span></label>
+  <label class="chk"><input type="checkbox" id="aps1"><span>Un solo anticorpo antifosfolipidi: anticardiolipina o anti-β2-glicoproteina I<small>e1002 n. 8</small></span></label>
+  <label class="chk"><input type="checkbox" id="ciDoac"><span>Controindicazione al DOAC<small>e1022 n. 6; con ClCr &lt;15 lo strumento la deduce dal rene</small></span></label>
+  <label class="chk"><input type="checkbox" id="rifiuto"><span>Anticoagulazione rifiutata o controindicata<small>e1022 n. 9</small></span></label>
+</div>
+
+<div class="stage"><span class="stage-n">4</span><span class="stage-t">Rene e peso</span><span class="stage-w">Cockcroft-Gault · Suppl. Tab. 6 e 8</span></div>
+<div class="card">
+  <div class="cgrid">
+    <label class="cf"><span>Età, anni</span><input type="number" id="eta" placeholder="—" inputmode="numeric"></label>
+    <label class="cf"><span>Sesso</span><select id="sesso"><option value="">—</option><option value="m">M</option><option value="f">F</option></select></label>
+    <label class="cf"><span>Peso, kg</span><input type="number" id="peso" placeholder="—" inputmode="decimal"></label>
+    <label class="cf"><span>Altezza, cm</span><input type="number" id="alt" placeholder="—" inputmode="numeric"></label>
+    <label class="cf"><span>Creatinina, mg/dL</span><input type="number" id="creat" placeholder="—" step="0.01" inputmode="decimal"></label>
+  </div>
+  <label class="chk" style="margin-top:8px"><input type="checkbox" id="dial"><span>In dialisi</span></label>
+</div>
+
+<div class="stage"><span class="stage-n">→</span><span class="stage-t">Che cosa fare</span><span class="stage-w">AHA/ACC 2026 · ESC 2019 dove diverge</span></div>
+<div class="card" id="outDurata"></div>
+<div class="card" id="outMolecola"></div>
+<div class="card" id="outRighe"></div>
+<div class="card" id="outDopo"></div>
+<div class="card"><h3>Incoerenze e lacune della fonte toccate da questo caso</h3><div id="outInc"></div></div>
+<div class="card"><h3>Limiti per questo paziente</h3><ul class="lista" id="limiti"></ul></div>
+
+<div class="foot">
+  <strong>Fonte.</strong> 2026 AHA/ACC/ACCP/ACEP/CHEST/SCAI/SHM/SIR/SVM/SVN Guideline for the Evaluation and Management of Acute Pulmonary Embolism in Adults. <em>Circulation</em> 2026;153:e977–e1051 (doi 10.1161/CIR.0000000000001415) — § 5.2, raccomandazioni p. e1022 e testo pp. e1022–e1024; Tab. 9, p. e1023; § 4.2.1, raccomandazioni e1002 e testo p. e1004; § 5.1.1, e1017; § 5.2.1, e1024; definizioni, p. e982. 2019 ESC Guidelines for the diagnosis and management of acute pulmonary embolism. <em>Eur Heart J</em> 2020;41:543–603 (doi 10.1093/eurheartj/ehz405) — raccomandazioni pp. 569, 577, 579; e il supplementare, Suppl. Tab. 5, 6 e 8. Le soglie renali dei DOAC vengono dalle Suppl. Tab. 6 e 8; quelle delle eparine e la dose dell'edoxaban fra 15 e 29 mL/min dalle schede tecniche. Le pagine sono quelle stampate. Ogni esito porta la sua.<br><br>
+  <span class="prov prov-fonte">fonte</span> dato della linea guida o del supplementare · <span class="prov prov-rcp">scheda tecnica</span> dato che nessuna delle due linee guida dà · <span class="prov prov-sintesi">sintesi</span> lettura nostra di più passi della fonte · <span class="verif">DA VERIFICARE</span> dato che né la fonte né le schede lette danno.<br><br>
+  Strumento personale di studio e consultazione: <strong>non sostituisce il giudizio clinico</strong>, la scheda tecnica dei farmaci né la lettura della linea guida. Non stima il rischio emorragico né quello di recidiva. Non salva i dati e non li invia in rete.
+</div>
+
+</div>
+<script>
+(function () {
+  "use strict";
+
+  /* ═══ DATI ═══════════════════════════════════════════════════════════════
+     AHA/ACC 2026 (Circulation 2026;153:e977–e1051), pagine stampate.
+     Classi e livelli dalla griglia fonti_corrette/AHA26EP/raccomandazioni.json,
+     riletti sul testo di p. e1022:
+       n. 1  prima EP senza fattore maggiore reversibile: proseguire ......... 1 A
+       n. 2  prima EP da fattore maggiore reversibile: sospendere ............ 1 B-NR
+       n. 3  prima EP da fattore persistente: proseguire («is reasonable») ... 1 C-LD
+       n. 4  fase estesa: DOAC, salvo controindicazione, sul VKA ............. 1 A
+       n. 5  cancro, fase estesa: DOAC o EBPM sul VKA ......................... 1 A
+       n. 6  senza cancro, DOAC controindicato: VKA su aspirina o nulla ....... 1 B-R
+       n. 7  fase estesa: metà dose di apixaban o rivaroxaban ................ 1 A
+       n. 8  prima EP da fattore minore reversibile: decisione condivisa ...... 2a B-NR
+       n. 9  anticoagulazione controindicata o rifiutata: aspirina bassa dose  2a B-R
+     Tab. 9, p. e1023, letta sulla pagina cella per cella:
+       maggiore reversibile  chirurgia in anestesia generale ≥30 min · ricovero per
+                             malattia acuta ≥72 h costretto a letto · cesareo ·
+                             frattura di un arto inferiore
+       minore reversibile    chirurgia in anestesia generale <30 min · ricovero per
+                             malattia acuta <72 h · malattia acuta fuori
+                             dall'ospedale ≥72 h costretto a letto · estrogeni
+                             (sostitutivi o contraccettivi) · peripartum · trauma
+                             con mobilità ridotta ≥72 h
+       persistente           cancro attivo con o senza terapia · malattia
+                             autoimmune (AR, LES) · MICI · immobilità cronica
+     Altre righe: e1002 n. 7 APS trombotica conclamata, VKA sul DOAC 1 A; n. 8
+       un solo anticorpo, DOAC alternativa ragionevole 2b B-R; n. 11 IRC 4–5 o
+       emodialisi, incerto che l'apixaban sia meglio del VKA 2b B-NR; n. 22 ClCr
+       <30 in EBPM, anti-Xa ragionevole 2a C-LD. e1017 n. 4 rivalutazione
+       periodica in fase estesa 1 B-NR; n. 8 senza fattore identificabile,
+       screening oncologico per età 1 A. e1024 n. 1–5, recidiva in terapia.
+     Testo: p. e1004 APS trombotica, anticoagulazione a lungo termine; p. e1022
+       recidiva 30–40% a 10 anni senza fattore; p. e1023 fattore chirurgico <1%
+       l'anno-paziente, rivaroxaban 20/10 mg e aspirina 100 mg, apixaban 5/2,5 mg,
+       DOAC nel cancro (apixaban, rivaroxaban, edoxaban); p. e1024 RENOVE, API-CAT,
+       fattore minore 4,2–7,1% l'anno, VTE-PREDICT non validato.
+     Definizioni, p. e982: fase iniziale i primi 3–6 mesi, fase estesa oltre 6.
+
+     ESC 2019 (Eur Heart J 2020;41:543–603), griglia fonti/ESC19EP:
+       p. 577  recidiva non legata a fattore maggiore: indefinita ............ I B
+               APS: VKA a tempo indefinito .................................. I B
+               prima EP senza fattore identificabile: estesa da considerare ... IIa A
+               fattore persistente diverso dall'APS: estesa da considerare .... IIa C
+               fattore minore: estesa da considerare .......................... IIa C
+               NOAC a dose ridotta dopo 6 mesi, solo senza cancro ............. IIa A
+               (nota e: dabigatran ed edoxaban restano a dose piena)
+               aspirina o sulodexide a chi rifiuta ogni anticoagulante orale .. IIb B
+       p. 579  cancro: EBPM per i primi 6 mesi ............................... IIa A
+               edoxaban alternativa, senza tumore gastrointestinale ........... IIa B
+               rivaroxaban alternativa, senza tumore gastrointestinale ........ IIa C
+               estesa oltre 6 mesi, indefinita o fino alla guarigione ......... IIa B
+       p. 569  NOAC non raccomandati nella sindrome da antifosfolipidi ........ III C
+     Supplementare: Tab. 5 (EBPM; dalteparina nel cancro), Tab. 6 (soglie dei
+       NOAC), Tab. 8 (trial: dosi, esclusioni renali).
+     Soglie renali: dalle righe del prontuario (ep-aha2026_prontuario-terapie),
+       con la stessa provenienza — Suppl. Tab. 6 e 8 per i DOAC, schede tecniche
+       per le eparine. */
+
+  // EDOXABAN_15_29 — da aggiornare dalla scheda tecnica. Aggiornata il 30/09/2026:
+  // RCP Lixiana (EMA, rev. 27/08/2025), sez. 4.2 — 30 mg 1×/die con ClCr 15–50
+  // anche nel TEV, dopo ≥5 giorni di parenterale; <15 e dialisi non raccomandato;
+  // nel TEV fra 15 e 29 nessun dato clinico (Hokusai-VTE riduceva solo fra 30 e 50).
+  var EDOXABAN_15_29 = "<b>30 mg 1×/die</b>, dopo almeno 5 giorni di parenterale — ESC 2019, nota d, p. 569 " +
+    '<span class="prov prov-fonte">fonte</span>, e Lixiana, EMA, § 4.2 ' +
+    '<span class="prov prov-rcp">scheda tecnica</span> — ma nel TEV sotto 30 mL/min ' +
+    "<b>mancano dati clinici</b>: Hokusai-VTE riduceva la dose solo fra 30 e 50 ed escludeva ClCr &lt;30 " +
+    '<span class="prov prov-fonte">Suppl. Tab. 8</span>';
+
+  var A = {  // p. e1022, n. 1–9
+    n1: { c:"1",  l:"A",    p:"e1022", n:1, t:"prima EP senza fattore maggiore reversibile: proseguire in fase estesa" },
+    n2: { c:"1",  l:"B-NR", p:"e1022", n:2, t:"prima EP da fattore maggiore reversibile: sospendere alla fine della fase iniziale" },
+    n3: { c:"1",  l:"C-LD", p:"e1022", n:3, t:"prima EP da fattore persistente: proseguire in fase estesa, «è ragionevole»" },
+    n4: { c:"1",  l:"A",    p:"e1022", n:4, t:"in fase estesa un DOAC, salvo controindicazione, preferito al VKA per ridurre il sanguinamento" },
+    n5: { c:"1",  l:"A",    p:"e1022", n:5, t:"con cancro, in fase estesa DOAC o EBPM preferiti al VKA per ridurre la recidiva" },
+    n6: { c:"1",  l:"B-R",  p:"e1022", n:6, t:"senza cancro e con DOAC controindicato: VKA preferito ad aspirina o a nessuna terapia" },
+    n7: { c:"1",  l:"A",    p:"e1022", n:7, t:"in fase estesa metà dose di apixaban o rivaroxaban, per ridurre il sanguinamento" },
+    n8: { c:"2a", l:"B-NR", p:"e1022", n:8, t:"prima EP da fattore minore reversibile: decisione condivisa fra sospendere e proseguire" },
+    n9: { c:"2a", l:"B-R",  p:"e1022", n:9, t:"anticoagulazione controindicata o rifiutata: aspirina a basso dosaggio piuttosto che nulla" }
+  };
+  var A2 = {
+    aps:    { c:"1",  l:"A",    p:"e1002", n:7 },
+    aps1:   { c:"2b", l:"B-R",  p:"e1002", n:8 },
+    irc45:  { c:"2b", l:"B-NR", p:"e1002", n:11 },
+    antixa: { c:"2a", l:"C-LD", p:"e1002", n:22 },
+    rival:  { c:"1",  l:"B-NR", p:"e1017", n:4 },
+    screen: { c:"1",  l:"A",    p:"e1017", n:8 },
+    ric1:   { c:"1",  l:"C-EO", p:"e1024", n:1 },
+    ric2:   { c:"1",  l:"C-LD", p:"e1024", n:2 },
+    ric3:   { c:"2a", l:"C-EO", p:"e1024", n:3 },
+    ric4:   { c:"2a", l:"C-EO", p:"e1024", n:4 },
+    ric5:   { c:"2a", l:"B-NR", p:"e1024", n:5 }
+  };
+  var E = {  // ESC 2019
+    recid:   { c:"I",   l:"B", p:"577" },
+    aps:     { c:"I",   l:"B", p:"577" },
+    nessuno: { c:"IIa", l:"A", p:"577" },
+    pers:    { c:"IIa", l:"C", p:"577" },
+    minore:  { c:"IIa", l:"C", p:"577" },
+    ridotta: { c:"IIa", l:"A", p:"577" },
+    asa:     { c:"IIb", l:"B", p:"577" },
+    ebpm6:   { c:"IIa", l:"A", p:"579" },
+    edoxCa:  { c:"IIa", l:"B", p:"579" },
+    rivaCa:  { c:"IIa", l:"C", p:"579" },
+    cancro:  { c:"IIa", l:"B", p:"579" },
+    noacNo:  { c:"III", l:"C", p:"569" }
+  };
+  var DOSI = {
+    apixR: "<b>2,5 mg ×2/die</b>",   // e1022 n. 7 «metà dose»; mg dal testo pp. e1023–e1024
+    apixP: "<b>5 mg ×2/die</b>",     // p. e1023 (confronto con placebo), p. e1024 (RENOVE, API-CAT)
+    rivaR: "<b>10 mg 1×/die</b>",    // p. e1023 (confronto con aspirina 100 mg), p. e1024
+    rivaP: "<b>20 mg 1×/die</b>",    // p. e1023, p. e1024
+    dabi:  "<b>150 mg ×2/die</b>",   // ESC Suppl. Tab. 8 (RE-COVER); p. 577 nota e: non si riduce
+    edox:  "<b>60 mg 1×/die</b>",    // Suppl. Tab. 8 (Hokusai-VTE); p. 577 nota e
+    edoxR: "<b>30 mg 1×/die</b>"     // Suppl. Tab. 8: ClCr 30–50 o peso <60 kg
+  };
+  var SOGLIE = { edoxPeso:60, bmiAgg:30 };  // Suppl. Tab. 8; peso aggiustato come in tool_ep
+  var DOM = { eta:[18, 110], peso:[30, 250], alt:[120, 230], creat:[0.2, 15] };  // plausibilita' dello strumento, non della fonte
+  var NOMI_DOM = { eta:"età (18–110 anni)", peso:"peso (30–250 kg)", alt:"altezza (120–230 cm)", creat:"creatinina (0,2–15 mg/dL)" };
+  var PERS = { pNeo:"cancro attivo", pAutoimm:"malattia autoimmune", pMici:"malattia infiammatoria intestinale", pImmob:"immobilità cronica" };
+
+  /* ═══ FORMATO ═══════════════════════════════════════════════════════════ */
+  function nf(v, d) {
+    if (v === null || v === undefined || !isFinite(v)) return "—";
+    var s = v.toFixed(d === undefined ? 1 : d);
+    if (s.indexOf(".") >= 0) s = s.replace(/0+$/, "").replace(/\.$/, "");
+    return s.replace(".", ",");
+  }
+  function pA(r) {
+    var k = { "1":"cor-1", "2a":"cor-2a", "2b":"cor-2b", "3: No Benefit":"cor-3nb", "3: Harm":"cor-3h" }[r.c];
+    return '<span class="cor ' + k + ' aha">' + r.c + '</span> <span class="loe aha">' + r.l + "</span>";
+  }
+  function pE(r) {
+    var k = { "I":"cor-1", "IIa":"cor-2a", "IIb":"cor-2b", "III":"cor-3h" }[r.c];
+    return '<span class="cor ' + k + ' esc">' + r.c + '</span> <span class="loe esc">' + r.l + "</span>";
+  }
+  function pg(t) { return ' <span class="pg">' + t + "</span>"; }
+  function pgA(r) { return pg("AHA/ACC 2026, p. " + r.p + " n. " + r.n); }
+  function pgE(r) { return pg("ESC 2019, p. " + r.p); }
+  var SENZA = '<span class="cnc">senza classe</span>';
+  var S6 = '<span class="prov prov-fonte">Suppl. Tab. 6</span>',
+      S8 = '<span class="prov prov-fonte">Suppl. Tab. 8</span>',
+      FNT = '<span class="prov prov-fonte">fonte</span>',
+      RCP = '<span class="prov prov-rcp">scheda tecnica</span>',
+      SINT = '<span class="prov prov-sintesi">sintesi</span>',
+      VRF = '<span class="verif">DA VERIFICARE</span>';
+
+  /* ═══ FUNZIONI PURE ═════════════════════════════════════════════════════ */
+  function pulisci(s) {
+    var c = {}, k;
+    for (k in s) if (s.hasOwnProperty(k)) c[k] = s[k];
+    c.fuoriDom = [];
+    for (k in DOM) if (DOM.hasOwnProperty(k) && c[k] !== null && c[k] !== undefined && (c[k] < DOM[k][0] || c[k] > DOM[k][1])) { c.fuoriDom.push(k); c[k] = null; }
+    c.pers = [];
+    for (k in PERS) if (PERS.hasOwnProperty(k) && c[k]) c.pers.push(PERS[k]);
+    c.neo = !!c.pNeo;
+    c.apsDoppio = !!(c.apsC && c.aps1);
+    if (c.apsDoppio) c.aps1 = false;  // le due voci si escludono: vale la conclamata
+    return c;
+  }
+
+  // Cockcroft-Gault, come in tool_ep: sul peso aggiustato se BMI >=30 (ideale di
+  // Devine + 0,4 x eccesso) — scelta del progetto, non della fonte. Le dosi
+  // restano sul peso reale.
+  function clearance(s) {
+    var o = { clcr:null, bmi:null, pesoCG:null, baseCG:"", manca:[] };
+    if (s.peso !== null && s.alt !== null) o.bmi = s.peso / Math.pow(s.alt / 100, 2);
+    if (s.eta === null) o.manca.push("età");
+    if (!s.sesso) o.manca.push("sesso");
+    if (s.peso === null) o.manca.push("peso");
+    if (s.creat === null) o.manca.push("creatinina");
+    if (o.manca.length) return o;
+    o.pesoCG = s.peso; o.baseCG = "reale";
+    if (o.bmi !== null && o.bmi >= SOGLIE.bmiAgg) {
+      var ibw = (s.sesso === "f" ? 45.5 : 50) + 0.9 * (s.alt - 152.4);
+      if (ibw > 0 && s.peso > ibw) { o.pesoCG = ibw + 0.4 * (s.peso - ibw); o.baseCG = "aggiustato"; }
+    }
+    o.clcr = ((140 - s.eta) * o.pesoCG * (s.sesso === "f" ? 0.85 : 1)) / (72 * s.creat);
+    return o;
+  }
+
+  function durata(s) {
+    var o = { k:"", righe:[], esc:[], estesa:false, chip:["kx", "—"] };
+    if (!s.ep) { o.perche = "indicare l'episodio: prima EP, EP recidivante o recidiva in corso di anticoagulazione"; return o; }
+    if (s.ep === "interapia") { o.k = "cascata"; o.chip = ["k4", "recidiva in terapia"]; return o; }
+    if (!s.rev) { o.perche = "indicare il fattore reversibile della Tab. 9 al momento dell'EP — anche «nessuno»"; return o; }
+    var magg = s.rev === "maggiore", min = s.rev === "minore", pers = s.pers.length > 0;
+    var lista = s.pers.join(", ");
+    o.via = (s.ep === "prima" ? "prima EP" : "EP recidivante") + " → fattore reversibile: " + s.rev +
+            " → persistente: " + (pers ? lista : "nessuno") + (s.apsC ? " → APS trombotica" : "");
+    o.estesa = true;
+
+    if (s.ep === "recidiva") {
+      o.k = "recidiva";
+      o.righe.push({ st:"no", pg:"AHA/ACC 2026, p. e1022", t:"le righe 1, 2, 3 e 8 sono scritte per una <b>prima</b> EP: per l'EP recidivante la sezione non ha una riga di durata" });
+      if (!magg) {
+        o.big = "Nessuna riga AHA/ACC · la ESC 2019 chiede di proseguire a tempo indefinito";
+        o.chip = ["k1", "recidiva · ESC I B"];
+        o.esc.push({ st:"si", r:E.recid, t:"TEV recidivante — almeno un episodio precedente di EP o TVP — non legato a un fattore maggiore transitorio o reversibile: anticoagulante orale <b>a tempo indefinito</b>, raccomandato" });
+      } else {
+        o.big = "Nessuna riga, in nessuna delle due linee guida: decide il medico";
+        o.chip = ["kx", "recidiva · nessuna riga"];
+        o.esc.push({ st:"no", r:E.recid, t:"la riga della recidiva esclude il TEV legato a un fattore maggiore transitorio o reversibile: con questo fattore nemmeno la ESC 2019 ha una riga di durata" });
+      }
+      if (s.apsC) {
+        o.righe.push({ st:"si", pg:"AHA/ACC 2026, p. e1004", t:"sindrome da antifosfolipidi trombotica: il testo chiede un'anticoagulazione <b>a lungo termine</b>, per l'alto rischio di recidiva senza terapia" });
+        o.esc.push({ st:"si", r:E.aps, t:"sindrome da antifosfolipidi: VKA <b>a tempo indefinito</b>, raccomandato" });
+      }
+      if (s.neo) o.esc.push({ st:"si", r:E.cancro, t:"cancro: anticoagulazione oltre i primi 6 mesi <b>a tempo indefinito o fino alla guarigione</b> del cancro, da considerare" });
+      return o;
+    }
+
+    // prima EP
+    if (magg && (pers || s.apsC)) {
+      o.k = "conflitto"; o.chip = ["k3", "righe in conflitto"];
+      o.big = "Righe in conflitto: sospendere o proseguire lo decide il medico";
+      o.righe.push({ st:"cond", r:A.n2, t:"fattore maggiore reversibile: <b>sospendere</b> alla fine della fase iniziale" });
+      if (pers) o.righe.push({ st:"cond", r:A.n3, t:"fattore persistente (" + lista + "): <b>proseguire</b> in fase estesa, «è ragionevole»" });
+      if (s.apsC) o.righe.push({ st:"cond", pg:"AHA/ACC 2026, p. e1004", t:"sindrome da antifosfolipidi trombotica: il testo chiede un'anticoagulazione <b>a lungo termine</b>" });
+    } else if (magg) {
+      o.k = "sospendere"; o.estesa = false; o.chip = ["k0", "sospendere a 3–6 mesi"];
+      o.big = "Sospendere alla fine della fase iniziale (3–6 mesi)";
+      o.righe.push({ st:"si", r:A.n2, t:"prima EP da fattore maggiore reversibile: <b>sospendere</b> alla fine della fase iniziale anziché proseguire, per il miglior beneficio netto fra recidiva e sanguinamento — <b>raccomandato</b>" });
+    } else if (pers || s.apsC) {
+      o.k = "proseguire"; o.chip = ["k1", "proseguire in fase estesa"];
+      o.big = "Proseguire in fase estesa, senza una data di sospensione";
+      if (pers) o.righe.push({ st:"si", r:A.n3, t:"prima EP con fattore persistente (" + lista + "): proseguire in fase estesa — la riga dice <b>«è ragionevole»</b> con una classe 1 (vedi incoerenze)" });
+      o.righe.push({ st:"si", r:A.n1, t:"nessun fattore maggiore reversibile: proseguire in fase estesa è <b>benefico</b>" + (pers ? " — la riga vale anche qui, e dice lo stesso" : "") });
+      if (min) o.righe.push({ st:"cond", r:A.n8, t:"c'è anche un fattore minore: la sua riga chiede una decisione condivisa; la fonte non dice come si combina con la riga 3 (vedi lacune)" });
+      if (s.apsC) o.righe.push({ st:"si", pg:"AHA/ACC 2026, p. e1004", t:"sindrome da antifosfolipidi trombotica: il testo chiede un'anticoagulazione <b>a lungo termine</b>, per l'alto rischio di recidiva senza terapia" });
+    } else if (min) {
+      o.k = "condivisa"; o.chip = ["k2", "decisione condivisa"];
+      o.big = "Decisione condivisa: sospendere alla fine della fase iniziale o proseguire";
+      o.righe.push({ st:"si", r:A.n8, t:"prima EP da fattore minore reversibile: decidere con il paziente fra sospendere alla fine della fase iniziale e proseguire in fase estesa — <b>ragionevole</b>" });
+      o.righe.push({ st:"cond", r:A.n1, t:"alla lettera vale anche la riga 1, «senza fattore maggiore reversibile»: proseguire. Lo strumento applica la riga 8, scritta per il fattore minore (vedi incoerenze)" });
+    } else {
+      o.k = "proseguire"; o.chip = ["k1", "proseguire in fase estesa"];
+      o.big = "Proseguire in fase estesa, senza una data di sospensione";
+      o.righe.push({ st:"si", r:A.n1, t:"prima EP senza fattore della Tab. 9: proseguire in fase estesa è <b>benefico</b> per prevenire la recidiva" });
+    }
+
+    // ESC 2019 accanto, solo dove porta a una decisione diversa
+    if (s.apsC) o.esc.push({ st:"si", r:E.aps, t:"sindrome da antifosfolipidi: VKA <b>a tempo indefinito</b>, raccomandato — la AHA/ACC non dà una classe alla durata" });
+    if (s.neo) o.esc.push({ st:"si", r:E.cancro, t:"cancro: anticoagulazione oltre i primi 6 mesi <b>a tempo indefinito o fino alla guarigione</b> del cancro, da considerare" + (magg ? " — la riga ESC del cancro non guarda al fattore reversibile" : " — più debole della riga 3 AHA (1 C-LD)") });
+    if (pers && !s.neo && !magg) o.esc.push({ st:"si", r:E.pers, t:"fattore persistente diverso dall'APS: estesa a tempo indefinito <b>da considerare</b> — più debole della riga 3 AHA (1 C-LD)" });
+    if (min && !pers && !s.apsC) o.esc.push({ st:"si", r:E.minore, t:"fattore minore transitorio o reversibile: estesa a tempo indefinito <b>da considerare</b> — dove la AHA/ACC chiede una decisione condivisa (2a B-NR)" });
+    if (s.rev === "nessuno" && !pers && !s.apsC) o.esc.push({ st:"si", r:E.nessuno, t:"prima EP senza fattore identificabile: estesa a tempo indefinito <b>da considerare</b> — più debole della riga 1 AHA (1 A)" });
+    return o;
+  }
+
+  function opzDoac(o, cancro) {
+    o.opz.push({ m:"Apixaban", d:DOSI.apixR + " — dose ridotta, riga 7" + (cancro ? "; nel cancro è la dose dell'API-CAT" : ""), pg:"AHA/ACC 2026, p. e1022 n. 7; mg pp. e1023–e1024" });
+    o.opz.push({ m:"Rivaroxaban", d:DOSI.rivaR + " — dose ridotta, riga 7" + (cancro ? "; nel cancro la fonte non cita uno studio del rivaroxaban a dose ridotta" : ""), pg:"AHA/ACC 2026, p. e1022 n. 7; mg p. e1023" });
+    o.opz.push({ m:"Apixaban", d:DOSI.apixP + " — dose piena", pg:"AHA/ACC 2026, pp. e1023–e1024" });
+    o.opz.push({ m:"Rivaroxaban", d:DOSI.rivaP + " — dose piena", pg:"AHA/ACC 2026, pp. e1023–e1024" });
+    if (!cancro) o.opz.push({ m:"Dabigatran", d:DOSI.dabi + " — non si riduce: i regimi ridotti non sono stati studiati in fase estesa", pg:"ESC 2019, p. 577 nota e; Suppl. Tab. 8" });
+    o.opz.push({ m:"Edoxaban", d:DOSI.edox + ", " + DOSI.edoxR + " se ClCr 30–50 o peso &lt;60 kg — non si riduce oltre: i regimi ridotti non sono stati studiati in fase estesa", pg:"ESC 2019, p. 577 nota e; Suppl. Tab. 8" });
+  }
+  function opzEbpm(o) {
+    o.opz.push({ m:"EBPM", d:"dose della fase estesa " + VRF + ": la fonte non la dà. Nei <b>primi 6 mesi</b> del cancro la ESC dà la dalteparina 200 UI/kg 1×/die (massimo 18 000 UI) per 1 mese, poi 150 UI/kg 1×/die per 5 mesi", pg:"ESC 2019, Suppl. Tab. 5 nota b" });
+  }
+  function opzVka(o) {
+    o.opz.push({ m:"VKA (warfarin)", d:"titolato sull'INR; il <b>range INR della fase estesa</b> la fonte non lo dà: " + VRF, pg:"AHA/ACC 2026, p. e1022" });
+  }
+
+  function molecola(s, d, cl) {
+    var o = { k:"", opz:[], righe:[], esc:[], note:[], rene:[], chip:["kx", "—"] };
+    if (!d.k) { o.perche = "serve prima la condotta: " + d.perche; return o; }
+    if (d.k === "cascata") { o.perche = "nella recidiva in corso di terapia la molecola e la dose si cambiano con le righe della recidiva (p. e1024), non con queste"; return o; }
+    if (!d.estesa) {
+      o.k = "nessuna"; o.chip = ["k0", "nessuna"];
+      o.perche = "con la riga 2 si sospende alla fine della fase iniziale: non c'è una fase estesa da impostare. La riga 9, l'aspirina, è per chi avrebbe proseguito";
+      return o;
+    }
+    o.pre = { proseguire:"In fase estesa", condivisa:"Se la decisione condivisa porta a proseguire", conflitto:"Se si decide di proseguire", recidiva:"Se si prosegue" }[d.k];
+    var c = cl.clcr, dial = !!s.dial;
+    var ciRene = !dial && c !== null && c < 15;
+    var ci = !!s.ciDoac || ciRene;
+    o.ciRene = ciRene && !s.ciDoac;
+
+    if (s.rifiuto) {
+      o.k = "asa"; o.chip = ["k3", "aspirina"]; o.big = "Aspirina a basso dosaggio";
+      o.righe.push({ st:"si", r:A.n9, t:"anticoagulazione controindicata o rifiutata: aspirina a basso dosaggio piuttosto che nessuna terapia, per ridurre la recidiva — <b>ragionevole</b>" });
+      o.opz.push({ m:"Aspirina", d:"<b>basso dosaggio</b> — la riga non dà i mg; nei confronti citati dalla fonte l'aspirina era <b>100 mg/die</b>", pg:"AHA/ACC 2026, p. e1022 n. 9; p. e1023" });
+      o.note.push(["", "Non è un'alternativa equivalente: gli studi sull'aspirina hanno dato risultati discordanti" + pg("AHA/ACC 2026, p. e1024") + ", e il rivaroxaban, 20 o 10 mg, ha ridotto la recidiva rispetto all'aspirina 100 mg/die senza più sanguinamenti maggiori" + pg("AHA/ACC 2026, p. e1023") + "."]);
+      o.esc.push({ st:"si", r:E.asa, t:"a chi rifiuta o non tollera ogni anticoagulante orale, aspirina o sulodexide <b>possono essere considerati</b> — più debole della riga 9 AHA (2a B-R)" });
+      o.rene = ["asa"];
+      return o;
+    }
+    if (s.apsC && s.neo) {
+      o.k = "ebpmAps"; o.chip = ["k3", "EBPM · APS e cancro"]; o.big = "EBPM — lettura dello strumento";
+      o.righe.push({ st:"cond", r:A2.aps, t:"sindrome da antifosfolipidi trombotica conclamata: VKA preferito al DOAC" });
+      o.righe.push({ st:"cond", r:A.n5, t:"cancro: DOAC o EBPM preferiti al VKA" });
+      o.note.push(["", "Insieme, le due righe escludono il DOAC (per l'APS) e mettono il VKA dopo DOAC ed EBPM (per il cancro): resta l'<b>EBPM</b>. È una lettura dello strumento " + SINT + ": la fonte non tratta il caso (vedi lacune)."]);
+      opzEbpm(o); opzVka(o);
+      o.rene = ["enox", "dalte", "tinza", "nadro", "antixa", "vka"];
+      return o;
+    }
+    if (s.apsC) {
+      o.k = "vka"; o.chip = ["k2", "VKA · APS"]; o.big = "VKA (warfarin)";
+      o.righe.push({ st:"si", r:A2.aps, t:"sindrome da antifosfolipidi trombotica conclamata: VKA preferito al DOAC, per prevenire trombosi venose e arteriose — <b>raccomandato</b>" });
+      o.righe.push({ st:"no", r:A.n4, t:"la preferenza generale per il DOAC cede alla riga specifica dell'APS" });
+      o.note.push(["info", "Nel testo: con i DOAC più trombosi arteriose nell'APS trombotica, e più recidive nei tripli positivi con storia di trombosi arteriosa" + pg("AHA/ACC 2026, p. e1004") + "."]);
+      opzVka(o);
+      o.rene = ["vka"];
+      return o;
+    }
+    if (s.neo) {
+      if (ci) {
+        o.k = "ebpm"; o.chip = ["k2", "EBPM"]; o.big = "EBPM";
+        o.righe.push({ st:"si", r:A.n5, t:"cancro: DOAC o EBPM preferiti al VKA; con il DOAC controindicato" + (o.ciRene ? " — qui dalla clearance" : "") + " resta l'<b>EBPM</b> — <b>raccomandata</b>" });
+        o.righe.push({ st:"no", r:A.n6, t:"la riga del VKA è per chi <b>non</b> ha un cancro" });
+        opzEbpm(o);
+        if (o.ciRene) {
+          o.note.push(["stop", "Controindicazione al DOAC dedotta dalla clearance: sotto 15 mL/min nessun DOAC è raccomandato " + S6 + ". Ma sotto 15 anche l'enoxaparina non è raccomandata, la tinzaparina non ha una dose e la nadroparina è controindicata " + RCP + ": nessuna molecola della riga 5 è senza limite renale. Restano la dalteparina guidata dall'anti-Xa e il VKA, che la riga 5 mette dopo DOAC ed EBPM. <b>Decide il medico.</b>"]);
+          opzVka(o);
+          o.rene = ["enox", "dalte", "tinza", "nadro", "antixa", "vka"];
+        } else {
+          o.rene = ["enox", "dalte", "tinza", "nadro", "antixa"];
+        }
+      } else {
+        o.k = "doacEbpm"; o.chip = ["k1", "DOAC o EBPM"]; o.big = "DOAC o EBPM, preferiti al VKA";
+        o.righe.push({ st:"si", r:A.n5, t:"cancro, in fase estesa: DOAC o EBPM preferiti al VKA, per ridurre la recidiva — <b>raccomandato</b>" });
+        o.righe.push({ st:"si", r:A.n4, t:"fra DOAC e VKA, il DOAC per ridurre il sanguinamento — <b>raccomandato</b>" });
+        o.righe.push({ st:"si", r:A.n7, t:"metà dose di apixaban o rivaroxaban — <b>raccomandata</b>; la riga non esclude il cancro, e nel cancro la prova citata è l'API-CAT, con il solo apixaban" });
+        opzDoac(o, true); opzEbpm(o);
+        o.note.push(["info", "<b>API-CAT</b>: 1766 pazienti con TEV e cancro, dopo almeno 6 mesi di terapia, apixaban 2,5 contro 5 mg ×2/die: recidive 2,1% contro 2,8% (HR 0,76, IC 95% 0,41–1,41), sanguinamenti clinicamente rilevanti 12,1% contro 15,6%" + pg("AHA/ACC 2026, p. e1024") + "."]);
+        o.note.push(["info", "Nel cancro il testo nomina apixaban, rivaroxaban ed edoxaban come non inferiori all'EBPM sulla recidiva, con sanguinamento simile; il dabigatran non è nominato" + pg("AHA/ACC 2026, p. e1023") + "."]);
+        o.esc.push({ st:"si", r:E.ebpm6, t:"EBPM a dose per peso preferita ai VKA per i <b>primi 6 mesi</b>" });
+        o.esc.push({ st:"si", r:E.edoxCa, t:"edoxaban in alternativa all'EBPM <b>solo senza tumore gastrointestinale</b> — la AHA/ACC non fa questa distinzione" });
+        o.esc.push({ st:"si", r:E.rivaCa, t:"rivaroxaban in alternativa all'EBPM, <b>solo senza tumore gastrointestinale</b>" });
+        o.esc.push({ st:"no", r:E.ridotta, t:"la dose ridotta dei NOAC è prevista <b>solo senza cancro</b>, e dopo 6 mesi — dove la AHA/ACC la raccomanda anche nel cancro (1 A)" });
+        o.rene = ["apix", "riva", "edox", "enox", "dalte", "tinza", "nadro", "antixa"];
+        o.ridotta = true;
+      }
+      if (s.aps1) o.righe.push({ st:"cond", r:A2.aps1, t:"un solo anticorpo antifosfolipidi: il DOAC può essere un'alternativa ragionevole al VKA" });
+    } else if (ci) {
+      o.k = "vka"; o.chip = ["k2", "VKA"]; o.big = "VKA (warfarin)";
+      o.righe.push({ st:"si", r:A.n6, t:"senza cancro, con il DOAC controindicato" + (o.ciRene ? " — qui dalla clearance" : "") + ": VKA piuttosto che aspirina o nessuna terapia, per ridurre la recidiva — <b>raccomandato</b>" });
+      o.righe.push({ st:"no", r:A.n4, t:"la preferenza per il DOAC vale «salvo controindicazione»" });
+      if (o.ciRene) o.note.push(["stop", "Controindicazione al DOAC dedotta dalla clearance: sotto 15 mL/min nessun DOAC è raccomandato " + S6 + "."]);
+      opzVka(o);
+      o.rene = ["vka"];
+    } else if (s.aps1) {
+      o.k = "doacAps1"; o.chip = ["k2", "VKA o DOAC"]; o.big = "VKA, o un DOAC come alternativa";
+      o.righe.push({ st:"si", r:A2.aps1, t:"un solo anticorpo antifosfolipidi (anticardiolipina o anti-β2-glicoproteina I): il DOAC <b>può essere un'alternativa ragionevole</b> al VKA" });
+      o.righe.push({ st:"cond", r:A.n4, t:"la riga generale, DOAC sul VKA, non distingue gli anticorpi: la riga specifica è più debole" });
+      o.righe.push({ st:"cond", r:A.n7, t:"se si sceglie il DOAC, la metà dose di apixaban o rivaroxaban" });
+      o.note.push(["info", "Nel testo il DOAC è non inferiore nel profilo a un solo anticorpo a basso titolo, se non c'è storia di trombosi arteriosa, e si considera in chi preferisce evitare i controlli del VKA" + pg("AHA/ACC 2026, p. e1004") + "."]);
+      opzVka(o); opzDoac(o, false);
+      o.esc.push({ st:"si", r:E.noacNo, t:"NOAC <b>non raccomandati</b> nella sindrome da antifosfolipidi, senza distinguere il numero di anticorpi" });
+      o.rene = ["vka", "apix", "riva", "dabi", "edox"];
+      o.ridotta = true;
+    } else {
+      o.k = "doac"; o.chip = ["k1", "apixaban 2,5 ×2 · rivaroxaban 10"];
+      o.big = "Apixaban 2,5 mg ×2/die o rivaroxaban 10 mg 1×/die";
+      o.righe.push({ st:"si", r:A.n4, t:"in fase estesa un DOAC, salvo controindicazione, preferito al VKA per ridurre il sanguinamento — <b>raccomandato</b>" });
+      o.righe.push({ st:"si", r:A.n7, t:"metà dose di apixaban o rivaroxaban, per ridurre il sanguinamento — <b>raccomandata</b>" });
+      opzDoac(o, false);
+      o.esc.push({ st:"si", r:E.ridotta, t:"la dose ridotta di apixaban o rivaroxaban va <b>considerata dopo 6 mesi</b> di dose terapeutica, solo senza cancro; dabigatran ed edoxaban restano a dose piena (nota e) — dove la AHA/ACC la raccomanda (1 A) dall'ingresso in fase estesa" });
+      o.rene = ["apix", "riva", "dabi", "edox"];
+      o.ridotta = true;
+    }
+    if (o.ridotta) {
+      o.note.push(["info", "<b>RENOVE</b>: 2768 pazienti a rischio aumentato di recidiva, dopo 6–24 mesi di terapia, dose ridotta contro dose piena di apixaban o rivaroxaban: recidive 2,2% contro 1,8%, sanguinamenti maggiori o clinicamente rilevanti 9,9% contro 15,2%" + pg("AHA/ACC 2026, p. e1024") + ". <b>La non inferiorità della dose ridotta sulla recidiva non è stata dimostrata</b>" + pg("PMID 40023651") + ". Negli studi citati la dose ridotta cominciava dopo 6–24 mesi (RENOVE) o almeno 6 (API-CAT)."]);
+    }
+    if (dial && (o.k === "doac" || o.k === "doacEbpm" || o.k === "doacAps1")) {
+      o.note.push(["stop", "<b>Dialisi.</b> Rivaroxaban, edoxaban e dabigatran non raccomandati " + S6 + "; per l'apixaban è <b>incerto</b> che sanguini meno del VKA " + pA(A2.irc45) + pgA(A2.irc45) + "; la ESC evita tutti i NOAC in chi è in dialisi " + S6 + " (nota c). La scelta fra apixaban e " + (s.neo ? "EBPM" : "VKA") + " è del medico."]);
+      o.chip = ["k3", o.chip[1] + " · dialisi"];
+    } else if (c !== null && c < 30 && (o.k === "doac" || o.k === "doacEbpm" || o.k === "doacAps1")) {
+      o.chip = ["k3", o.chip[1] + " · vedi rene"];
+    }
+    o.pre = o.pre || "";
+    return o;
+  }
+
+  // la riga del rene di ogni molecola mostrata; c = ClCr o null, d = dialisi
+  function reneMol(id, c, d, peso) {
+    function R(m, lvl, t) { return { m:m, lvl:lvl, t:t }; }
+    var nd = (c === null && !d);
+    switch (id) {
+      case "apix":
+        if (nd) return R("Apixaban", "nd", "non raccomandato sotto 15 " + S6 + " · fra 15 e 29 dose " + VRF + " (la fonte non la dà); AMPLIFY escludeva ClCr &lt;25 " + S8);
+        if (d) return R("Apixaban", "warn", "in dialisi è <b>incerto</b> che sanguini meno del VKA " + pA(A2.irc45) + pgA(A2.irc45) + "; la ESC evita tutti i NOAC in dialisi " + S6);
+        if (c < 15) return R("Apixaban", "stop", "<b>non raccomandato</b> sotto 15 " + S6);
+        if (c < 30) return R("Apixaban", "warn", "fra 15 e 29 dose " + VRF + " (la fonte non la dà); AMPLIFY escludeva ClCr &lt;25 " + S8 + "; nella IRC stadio 4–5 il vantaggio sul VKA è <b>incerto</b> " + pA(A2.irc45) + pgA(A2.irc45));
+        return R("Apixaban", "ok", "nessuna soglia a questa clearance: non raccomandato sotto 15, dose da verificare fra 15 e 29 " + S6);
+      case "riva":
+        if (nd) return R("Rivaroxaban", "nd", "non raccomandato sotto 30 per la FDA, sotto 15 per l'EMA " + S6 + " · fra 15 e 29 (EMA) dose " + VRF + "; EINSTEIN escludeva ClCr &lt;30 " + S8);
+        if (d || c < 15) return R("Rivaroxaban", "stop", "<b>non raccomandato</b> sotto 15 (EMA), e già sotto 30 per la FDA " + S6);
+        if (c < 30) return R("Rivaroxaban", "warn", "per l'EMA ammesso sopra 15, per la FDA <b>non raccomandato</b> sotto 30 " + S6 + "; EINSTEIN escludeva ClCr &lt;30 " + S8 + "; fra 15 e 29 dose " + VRF);
+        return R("Rivaroxaban", "ok", "nessuna soglia a questa clearance: sotto 30 per la FDA, sotto 15 per l'EMA " + S6);
+      case "dabi":
+        if (nd) return R("Dabigatran", "nd", "non raccomandato sotto 30; con un inibitore della P-gp già sotto 50 " + S6);
+        if (d || c < 30) return R("Dabigatran", "stop", "<b>non raccomandato</b> sotto 30 " + S6);
+        if (c < 50) return R("Dabigatran", "warn", "<b>escluso</b> se il paziente assume un inibitore della P-gp (sotto 50) " + S6);
+        return R("Dabigatran", "ok", "nessuna soglia a questa clearance: sotto 30 non raccomandato, sotto 50 non con un inibitore della P-gp " + S6);
+      case "edox":
+        if (nd) return R("Edoxaban", "nd", "30 mg 1×/die con ClCr 30–50 o peso &lt;60 kg " + S8 + " · non raccomandato sotto 15 " + S6 + " · fra 15 e 29: " + EDOXABAN_15_29);
+        if (d || c < 15) return R("Edoxaban", "stop", "<b>non raccomandato</b> sotto 15" + (d ? " e in dialisi" : "") + " " + S6);
+        if (c < 30) return R("Edoxaban", "warn", "fra 15 e 29: " + EDOXABAN_15_29);
+        if (c <= 50) return R("Edoxaban", "warn", "<b>30 mg 1×/die</b> anziché 60 (ClCr 30–50) " + S8);
+        if (peso !== null && peso < SOGLIE.edoxPeso) return R("Edoxaban", "warn", "clearance sopra 50, ma <b>30 mg 1×/die</b> per il peso &lt;60 kg " + S8);
+        return R("Edoxaban", "ok", "<b>60 mg 1×/die</b>: nessuna riduzione a questa clearance e a questo peso " + S8);
+      case "vka":
+        return R("VKA", nd ? "nd" : "ok", "la fonte non dà un aggiustamento renale: il VKA si titola sull'INR " + SINT);
+      case "enox":
+        if (nd) return R("Enoxaparina", "nd", "ClCr 15–30: 1 mg/kg 1×/die · &lt;15: non raccomandata (salvo l'emodialisi) · 30–80: nessun aggiustamento, monitoraggio clinico " + RCP);
+        if (d || c < 15) return R("Enoxaparina", "stop", "<b>non raccomandata</b> sotto 15 (salvo l'emodialisi) " + RCP);
+        if (c <= 30) return R("Enoxaparina", "warn", "ClCr 15–30: <b>1 mg/kg 1×/die</b>" + (peso !== null ? " = " + nf(peso, 0) + " mg sul peso reale" : "") + ", non 1 mg/kg ×2 né 1,5 mg/kg " + RCP);
+        return R("Enoxaparina", "ok", "nessun aggiustamento" + (c <= 80 ? ", monitoraggio clinico (30–80)" : "") + " " + RCP);
+      case "dalte":
+        if (nd) return R("Dalteparina", "nd", "ClCr &lt;30: nessuna riduzione fissa, dose guidata dall'anti-Xa " + RCP + " (britannica: in Italia non risulta autorizzata)");
+        if (d || c < 30) return R("Dalteparina", "warn", "nessuna riduzione fissa: dose guidata dall'<b>anti-Xa</b> " + RCP + " (britannica: in Italia non risulta autorizzata)");
+        return R("Dalteparina", "ok", "nessun aggiustamento sopra 30 " + RCP);
+      case "tinza":
+        if (nd) return R("Tinzaparina", "nd", "ClCr &lt;30: non raccomandata, la dose non è stabilita; se serve, con monitoraggio dell'anti-Xa " + RCP);
+        if (d || c < 30) return R("Tinzaparina", "warn", "<b>non raccomandata</b>: la dose non è stabilita; se serve, con monitoraggio dell'anti-Xa (nessun accumulo documentato fino a 20) " + RCP);
+        return R("Tinzaparina", "ok", "nessun aggiustamento sopra 30 " + RCP);
+      case "nadro":
+        if (nd) return R("Nadroparina", "nd", "ClCr 30–50: riduzione dal 25 al 33% · &lt;30: controindicata a dose di trattamento " + RCP);
+        if (d || c < 30) return R("Nadroparina", "stop", "<b>controindicata</b> a dose di trattamento sotto 30 " + RCP);
+        if (c <= 50) return R("Nadroparina", "warn", "riduzione dal <b>25 al 33%</b>, se la giudichi appropriata sul rischio emorragico e trombotico " + RCP);
+        return R("Nadroparina", "ok", "nessun aggiustamento sopra 50 " + RCP);
+      case "antixa":
+        if (nd) return R("Anti-Xa", "nd", "con EBPM e ClCr &lt;30 monitorarlo è ragionevole " + pA(A2.antixa) + pgA(A2.antixa));
+        if (!d && c >= 30) return R("Anti-Xa", "ok", "non serve di routine a questa clearance: diventa ragionevole sotto 30 " + pgA(A2.antixa));
+        return R("Anti-Xa", "warn", "con EBPM monitorarlo è <b>ragionevole</b> " + pA(A2.antixa) + pgA(A2.antixa) + " " + FNT);
+      case "asa":
+        return R("Aspirina", "nd", "la fonte non dà un aggiustamento renale: " + VRF);
+    }
+    return null;
+  }
+
+  // le nove righe di p. e1022 per questo paziente
+  function nove(s, d, m) {
+    var L = [], prima = s.ep === "prima", magg = s.rev === "maggiore", min = s.rev === "minore", pers = s.pers.length > 0;
+    function add(r, st, t) { L.push({ r:r, st:st, t:t }); }
+    var manca = !d.k ? "—: " + d.perche : d.k === "cascata" ? "—: recidiva in corso di terapia" : "";
+    if (manca) {
+      for (var i = 1; i <= 9; i++) add(A["n" + i], "no", manca);
+      return L;
+    }
+    var noPrima = "non è una prima EP";
+    // 1
+    if (!prima) add(A.n1, "no", noPrima);
+    else if (magg) add(A.n1, "no", "c'è un fattore maggiore reversibile");
+    else if (min && !pers && !s.apsC) add(A.n1, "cond", "alla lettera comprende il fattore minore, che ha la sua riga, la 8");
+    else add(A.n1, "si", "nessun fattore maggiore reversibile");
+    // 2
+    if (!prima || !magg) add(A.n2, "no", !prima ? noPrima : "nessun fattore maggiore reversibile");
+    else if (pers || s.apsC) add(A.n2, "cond", "in conflitto con " + (pers ? "la riga 3" : "il testo sull'APS"));
+    else add(A.n2, "si", "fattore maggiore reversibile");
+    // 3
+    if (!prima || !pers) add(A.n3, "no", !prima ? noPrima : "nessun fattore persistente");
+    else if (magg) add(A.n3, "cond", "in conflitto con la riga 2");
+    else add(A.n3, "si", "fattore persistente: " + s.pers.join(", "));
+    // 4–7, 9: dipendono dalla molecola
+    var mk = m.k || "";
+    var fuori = !d.estesa ? "nessuna fase estesa" : "";
+    if (fuori) add(A.n4, "no", fuori);
+    else if (mk === "doac" || mk === "doacEbpm") add(A.n4, "si", "nessuna controindicazione al DOAC");
+    else if (mk === "doacAps1") add(A.n4, "cond", "cede alla riga specifica dell'APS con un solo anticorpo");
+    else if (mk === "asa") add(A.n4, "no", "anticoagulazione rifiutata o controindicata");
+    else if (s.apsC) add(A.n4, "no", "APS trombotica: VKA sul DOAC");
+    else add(A.n4, "no", "DOAC controindicato");
+    if (fuori) add(A.n5, "no", fuori);
+    else if (!s.neo) add(A.n5, "no", "nessun cancro");
+    else if (mk === "asa") add(A.n5, "no", "anticoagulazione rifiutata o controindicata");
+    else add(A.n5, mk === "ebpmAps" ? "cond" : "si", "cancro");
+    if (fuori) add(A.n6, "no", fuori);
+    else if (s.neo) add(A.n6, "no", "c'è un cancro: vale la riga 5");
+    else if (mk === "vka" && !s.apsC) add(A.n6, "si", "DOAC controindicato");
+    else if (mk === "asa") add(A.n6, "no", "anticoagulazione rifiutata o controindicata");
+    else add(A.n6, "no", s.apsC ? "il VKA viene dalla riga dell'APS" : "il DOAC non è controindicato");
+    if (fuori) add(A.n7, "no", fuori);
+    else if (mk === "doac" || mk === "doacEbpm") add(A.n7, "si", "se si sceglie apixaban o rivaroxaban");
+    else if (mk === "doacAps1") add(A.n7, "cond", "se si sceglie il DOAC");
+    else add(A.n7, "no", "nessun DOAC in questo schema");
+    // 8
+    if (!prima || !min) add(A.n8, "no", !prima ? noPrima : "nessun fattore minore reversibile");
+    else if (pers || s.apsC) add(A.n8, "cond", "accanto alla riga 3: la fonte non dice come si combinano");
+    else add(A.n8, "si", "fattore minore reversibile");
+    // 9
+    if (fuori) add(A.n9, "no", fuori);
+    else if (mk === "asa") add(A.n9, "si", "anticoagulazione rifiutata o controindicata");
+    else add(A.n9, "no", "l'anticoagulazione non è rifiutata né controindicata");
+    // nell'ordine della fonte
+    var ord = [];
+    for (var n = 1; n <= 9; n++) for (var j = 0; j < L.length; j++) if (L[j].r.n === n) ord.push(L[j]);
+    return ord;
+  }
+
+  function incoerenze(s, d, m) {
+    var L = [], prima = s.ep === "prima", pers = s.pers.length > 0;
+    if (prima && s.rev === "minore" && !pers && !s.apsC)
+      L.push("<b>Righe 1 e 8.</b> La riga 1 vale per la prima EP «senza fattore maggiore reversibile», e quindi comprende anche il fattore minore, che nella stessa tabella ha una riga sua, la 8 (decisione condivisa, 2a B-NR); il testo di supporto della riga 1 parla invece di chi non ha un fattore identificabile. Lo strumento applica la riga 8, più specifica, e mostra la 1 accanto." + pg("AHA/ACC 2026, p. e1022"));
+    if (prima && pers && s.rev !== "maggiore")
+      L.push("<b>Riga 3, classe e parole.</b> La riga del fattore persistente è di classe 1 (C-LD), ma la frase dice «è ragionevole», la formula della 2a, e il testo di supporto «può essere ragionevole». Lo strumento mostra la classe della griglia, 1, e riporta la parola della riga." + pg("AHA/ACC 2026, pp. e1022–e1023"));
+    if (prima && pers && s.rev === "minore")
+      L.push("<b>Lacuna: righe 3 e 8 insieme.</b> Un fattore persistente e un fattore minore nello stesso paziente: la riga 3 dice di proseguire, la 8 di decidere insieme, e la fonte non dice come si combinano. Lo strumento mette prima la riga 3, di classe più alta e legata al fattore che non si esaurisce, e lascia la 8 accanto." + pg("AHA/ACC 2026, p. e1022"));
+    if (d.k === "conflitto")
+      L.push("<b>Lacuna: fattore maggiore e " + (pers ? "fattore persistente" : "APS") + ".</b> La riga 2 dice di sospendere, " + (pers ? "la riga 3 di proseguire" : "il testo sull'APS chiede un'anticoagulazione a lungo termine (p. e1004)") + ", e né la Tab. 9 né le righe dicono quale prevalga. Lo strumento non sceglie." + pg("AHA/ACC 2026, pp. e1022–e1023"));
+    if (d.estesa && d.k !== "sospendere")
+      L.push("<b>Quando comincia la fase estesa.</b> Nelle definizioni la fase iniziale sono i primi 3–6 mesi e la fase estesa è oltre i 6 mesi; le righe di p. e1022 la fanno cominciare alla fine della fase iniziale, cioè fra 3 e 6 mesi. Lo strumento segue le righe." + pg("AHA/ACC 2026, pp. e982, e1022"));
+    if (m.ridotta)
+      L.push("<b>RENOVE, l'intervallo di confidenza.</b> L'HR della recidiva, 1,32, è stampato con un IC 95% di 7,7–12,1, che non lo contiene: è un refuso. Nella pubblicazione l'IC è 0,67–2,60 e la non inferiorità della dose ridotta non è dimostrata." + pg("AHA/ACC 2026, p. e1024; PMID 40023651"));
+    if (m.k === "ebpmAps")
+      L.push("<b>Lacuna: APS e cancro.</b> La riga dell'APS preferisce il VKA al DOAC, quella del cancro DOAC o EBPM al VKA; la fonte non tratta chi ha entrambe le condizioni. Lo strumento propone l'EBPM, l'unica esclusa da nessuna delle due righe, e lo dichiara come lettura sua." + pg("AHA/ACC 2026, pp. e1002, e1022"));
+    if (s.apsDoppio)
+      L.push("<b>Due voci dell'APS spuntate.</b> APS conclamata e anticorpo singolo si escludono: lo strumento usa la conclamata.");
+    return L;
+  }
+
+  function limiti(s, d, m, cl) {
+    var L = [];
+    L.push("Lo strumento lavora alla fine della fase iniziale e dà per acquisiti la diagnosi e il trattamento dei primi mesi; la scelta dell'anticoagulante in fase acuta, le dosi di avvio e la terapia avanzata stanno nel Tool EP.");
+    if (s.ep === "prima" || s.ep === "recidiva") L.push("«Prima EP» è letta come primo episodio di TEV: un'EP dopo una TVP pregressa è trattata come recidiva, con la definizione della ESC (almeno un episodio precedente di EP o TVP" + pg("ESC 2019, p. 577") + ").");
+    if (s.rev) L.push("La Tab. 9 è un elenco di esempi: un fattore che non vi compare va collocato dal medico. La Tab. 9 non dice come si combinano più fattori.");
+    if (d.k === "condivisa") L.push("La decisione condivisa pesa recidiva e sanguinamento: dopo un fattore minore la recidiva a terapia sospesa è del 4,2–7,1% l'anno; un punteggio come VTE-PREDICT può aiutare, ma non è validato prospetticamente" + pg("AHA/ACC 2026, p. e1024") + ". Lo strumento non stima né l'uno né l'altro rischio.");
+    if (m.rene && m.rene.length && m.k !== "asa") L.push("La fonte non dà soglie renali proprie dello schema esteso: quelle mostrate sono le soglie della molecola (Suppl. Tab. 6 e 8, schede tecniche per le eparine), come nel prontuario.");
+    if (m.k === "vka" || m.k === "doacAps1" || m.k === "ebpmAps" || (m.k === "ebpm" && m.ciRene)) L.push("Il range INR della fase estesa la fonte non lo dà: " + VRF + ".");
+    L.push("Clearance di Cockcroft-Gault, sul peso aggiustato se il BMI è ≥30 (peso ideale di Devine + 0,4 × l'eccesso): scelta del progetto, la stessa del Tool EP, non della fonte. Le dosi restano sul peso reale.");
+    if (cl.clcr !== null && s.alt === null) L.push("Altezza non indicata: il BMI non si calcola e la clearance è sul peso reale; nell'obeso la sovrastima.");
+    L.push("I limiti di plausibilità dei campi (età 18–110 anni, peso 30–250 kg, altezza 120–230 cm, creatinina 0,2–15 mg/dL) sono dello strumento, non della fonte.");
+    return L;
+  }
+
+  /* ═══ STATO E DISEGNO ═════════════════════════════════════════════════ */
+  function el(id) { return document.getElementById(id); }
+  function ck(id) { var e = el(id); return !!(e && e.checked); }
+  function num(id) {
+    var e = el(id); if (!e) return null;
+    var v = String(e.value).replace(",", ".").trim();
+    if (v === "") return null;
+    var n = parseFloat(v);
+    return isFinite(n) ? n : null;
+  }
+  function radio(n) { var e = document.querySelector('input[name="' + n + '"]:checked'); return e ? e.value : ""; }
+  function nota(g, t) { return '<div class="nota ' + (g || "") + '">' + t + "</div>"; }
+  function chip(k, t) { return '<span class="cat ' + k + '">' + t + "</span>"; }
+  function riga(cls, ico, t) { return '<div class="riga ' + cls + '"><span class="ico">' + ico + '</span><span class="tx">' + t + "</span></div>"; }
+  function rigaR(x) {
+    var cls = { si:"si", cond:"nd", no:"no" }[x.st], ico = { si:"→", cond:"?", no:"·" }[x.st];
+    return riga(cls, ico, x.t + " " + (x.r ? pA(x.r) + pgA(x.r) : SENZA + (x.pg ? pg(x.pg) : "")));
+  }
+  function rigaEsc(x) {
+    return nota("esc", '<span class="etq">ESC 2019</span>' + (x.st === "no" ? "<span class=\"muted\">" + x.t + "</span>" : x.t) + " " + pE(x.r) + pgE(x.r));
+  }
+
+  function S() {
+    return {
+      ep:radio("ep"), rev:radio("rev"),
+      pNeo:ck("pNeo"), pAutoimm:ck("pAutoimm"), pMici:ck("pMici"), pImmob:ck("pImmob"),
+      apsC:ck("apsC"), aps1:ck("aps1"), ciDoac:ck("ciDoac"), rifiuto:ck("rifiuto"),
+      eta:num("eta"), sesso:el("sesso").value, peso:num("peso"), alt:num("alt"), creat:num("creat"), dial:ck("dial")
+    };
+  }
+
+  function disegna() {
+    var s = pulisci(S());
+    // le voci spuntate si colorano: la classe la mette il motore
+    var lab = document.querySelectorAll(".opz, .chk");
+    for (var q = 0; q < lab.length; q++) {
+      var inp = lab[q].getElementsByTagName("input")[0];
+      var base = lab[q].className.replace(/\s*\bon\b/g, "");
+      lab[q].className = base + (inp && inp.checked ? " on" : "");
+    }
+    var cl = clearance(s), d = durata(s), m = molecola(s, d, cl);
+
+    /* (a) la condotta */
+    var dom = "";
+    if (s.fuoriDom.length) {
+      var fd = [];
+      for (var f = 0; f < s.fuoriDom.length; f++) fd.push(NOMI_DOM[s.fuoriDom[f]]);
+      dom = nota("stop", "<b>Valore fuori dominio, ignorato:</b> " + fd.join(", ") + ". Lo strumento lo tratta come non inserito.");
+    }
+    var h = "<h3>Condotta al 3°–6° mese — AHA/ACC 2026, p. e1022 · Tab. 9, p. e1023</h3>";
+    if (!d.k) {
+      h += '<div class="esito">' + chip("kx", "—") + '<span class="muted">' + d.perche + "</span></div>";
+    } else if (d.k === "cascata") {
+      h += '<div class="esito"><span class="big">Recidiva in corso di anticoagulazione: non è una decisione di durata</span>' + chip("k4", "vedi la recidiva") + "</div>";
+      h += nota("stop", "La gestione sta in AHA/ACC 2026 § 5.2.1, <b>Recurrent Pulmonary Embolism</b>" + pg("p. e1024") + ": nella scheda della linea guida, la sezione <b>«5.2.1 · Embolia polmonare recidivante»</b>; nel prontuario, <b>«6 · Recidiva in corso di anticoagulazione»</b>. Le cinque righe, in breve:");
+      h += rigaR({ st:"si", r:A2.ric1, t:"confermare o escludere la recidiva con angio-TC o scintigrafia V/Q" });
+      h += rigaR({ st:"si", r:A2.ric2, t:"cercare i fattori clinici e farmacologici della recidiva: aderenza, dose, interazioni, assorbimento" });
+      h += rigaR({ st:"si", r:A2.ric3, t:"aderente a una dose terapeutica: cambiare classe di farmaco anziché restare nella stessa" });
+      h += rigaR({ st:"si", r:A2.ric4, t:"aderente a un DOAC a dose ridotta: dose piena della stessa classe" });
+      h += rigaR({ st:"si", r:A2.ric5, t:"cancro e recidiva in EBPM terapeutica: aumentare l'EBPM del 20–25%" });
+    } else {
+      h += '<div class="via">' + d.via + "</div>";
+      h += '<div class="esito"><span class="big">' + d.big + "</span>" + chip(d.chip[0], d.chip[1]) + "</div>";
+      for (var i = 0; i < d.righe.length; i++) h += rigaR(d.righe[i]);
+      for (var e = 0; e < d.esc.length; e++) h += rigaEsc(d.esc[e]);
+    }
+    el("outDurata").innerHTML = dom + h;
+
+    /* (b) la molecola e la dose */
+    var hm = "<h3>Fase estesa — molecola e dose · AHA/ACC 2026, p. e1022</h3>";
+    if (!m.k || m.k === "nessuna") {
+      hm += '<div class="esito">' + chip(m.k === "nessuna" ? "k0" : "kx", m.k === "nessuna" ? "nessuna fase estesa" : "—") + '<span class="muted">' + m.perche + "</span></div>";
+    } else {
+      if (m.pre) hm += '<div class="pre">' + m.pre + "</div>";
+      hm += '<div class="esito"><span class="big">' + m.big + "</span>" + chip(m.chip[0], m.chip[1]) + "</div>";
+      for (var r = 0; r < m.righe.length; r++) hm += rigaR(m.righe[r]);
+      hm += '<div class="sub" style="margin-top:12px">Molecole e dosi</div>';
+      for (var o = 0; o < m.opz.length; o++) hm += '<div class="mol"><span class="mn">' + m.opz[o].m + '</span><span class="md">' + m.opz[o].d + pg(m.opz[o].pg) + "</span></div>";
+      for (var n = 0; n < m.note.length; n++) hm += nota(m.note[n][0], m.note[n][1]);
+      for (var x = 0; x < m.esc.length; x++) hm += rigaEsc(m.esc[x]);
+    }
+    // il rene, riga viva di ogni molecola mostrata
+    var hr = "";
+    if (cl.clcr === null && !s.dial) {
+      hr += '<div class="rl-h">Rene <span class="rl-w">— ClCr «—»: ' + (cl.manca.length ? "mancano " + cl.manca.join(", ") : "dato fuori dominio") + ". Sotto, le soglie di ogni molecola.</span></div>";
+    } else if (cl.clcr === null) {
+      hr += '<div class="rl-h">Rene <b>dialisi</b> <span class="rl-w">clearance non stimabile: mancano ' + cl.manca.join(", ") + "</span></div>";
+    } else {
+      hr += '<div class="rl-h">Rene <b>ClCr ' + nf(cl.clcr, 0) + " mL/min</b>" + (s.dial ? " <b>· dialisi</b>" : "") +
+            '<span class="rl-w">Cockcroft-Gault su peso ' + cl.baseCG +
+            (cl.baseCG === "aggiustato" ? " " + nf(cl.pesoCG, 0) + " kg (reale " + nf(s.peso, 0) + " kg, BMI " + nf(cl.bmi) + ")" : " " + nf(s.peso, 0) + " kg") + "</span></div>";
+    }
+    var ids = m.rene || [];
+    for (var z = 0; z < ids.length; z++) {
+      var rr = reneMol(ids[z], cl.clcr, !!s.dial, s.peso);
+      if (rr) hr += '<div class="rl-i rl-' + rr.lvl + '"><span class="rl-m">' + rr.m + '</span><span class="rl-t">' + rr.t + "</span></div>";
+    }
+    if (!ids.length) hr += '<div class="rl-i rl-nd"><span class="rl-t muted">Nessuna molecola in fase estesa da confrontare con il rene.</span></div>';
+    el("outMolecola").innerHTML = hm + '<div class="rene" id="outRene">' + hr + "</div>";
+
+    /* (c) le nove righe di p. e1022 */
+    var N = nove(s, d, m), h9 = "<h3>Le nove righe di p. e1022 per questo paziente</h3>";
+    for (var k = 0; k < N.length; k++) {
+      var c9 = { si:"si", cond:"nd", no:"no" }[N[k].st], i9 = { si:"→", cond:"?", no:"·" }[N[k].st];
+      h9 += riga(c9, i9, '<span class="rn">' + N[k].r.n + ".</span>" + N[k].r.t + " " + pA(N[k].r) + ' <span class="muted">— ' + N[k].t + "</span>");
+    }
+    el("outRighe").innerHTML = h9;
+
+    /* (d) che cosa viene dopo */
+    var hd = "<h3>Che cosa viene dopo</h3>", dopo = [];
+    if (d.k && d.k !== "cascata") {
+      if (d.estesa) dopo.push(rigaR({ st:"si", r:A2.rival, t:"in fase estesa, rivalutare periodicamente rischi e benefici del proseguire" }));
+      if (d.k === "sospendere") dopo.push(nota("info", "Dopo un fattore maggiore la recidiva a terapia sospesa è bassa, sotto l'1% per anno-paziente dopo un fattore chirurgico, e simile con 3–6 o con 24 mesi di terapia" + pg("AHA/ACC 2026, p. e1023") + "."));
+      if (s.rev === "nessuno" && !s.pers.length && s.ep === "prima") {
+        dopo.push(rigaR({ st:"si", r:A2.screen, t:"senza fattore identificabile: anamnesi accurata, esame obiettivo e screening oncologico adatto all'età" }));
+        dopo.push(nota("info", "Senza un fattore identificabile, a terapia sospesa la recidiva è del 30–40% a 10 anni" + pg("AHA/ACC 2026, p. e1022") + "."));
+      }
+      if (s.pers.length) dopo.push(nota("info", "I fattori persistenti cambiano nel tempo — per esempio con la cura di un cancro —: la necessità di proseguire va rivalutata a intervalli regolari" + pg("AHA/ACC 2026, p. e1024") + "."));
+      dopo.push(nota("", "<b>Se l'EP recidiva durante la terapia</b> non è più una questione di durata: AHA/ACC 2026 § 5.2.1" + pg("p. e1024") + " — nella scheda della linea guida la sezione «5.2.1 · Embolia polmonare recidivante», nel prontuario la «6 · Recidiva in corso di anticoagulazione»." + (m.ridotta ? " In DOAC a dose ridotta: dose piena della stessa classe " + pA(A2.ric4) + pgA(A2.ric4) + "." : "")));
+    } else if (d.k === "cascata") {
+      dopo.push(nota("info", "Chiusa la gestione della recidiva, la durata si riprende da qui come <b>EP recidivante</b>."));
+    }
+    el("outDopo").innerHTML = hd + (dopo.length ? dopo.join("") : '<div class="esito">' + chip("kx", "—") + '<span class="muted">' + (d.perche || "—") + "</span></div>");
+
+    /* incoerenze e limiti */
+    var I = incoerenze(s, d, m), hi = "";
+    for (var j = 0; j < I.length; j++) hi += nota("", I[j]);
+    el("outInc").innerHTML = hi || '<p class="muted" style="font-size:13px">Nessuna, per questo caso.</p>';
+    el("limiti").innerHTML = "<li>" + limiti(s, d, m, cl).join("</li><li>") + "</li>";
+
+    function bar(id, kk, t) { var b = el(id); b.className = "cat " + kk; b.innerHTML = t; }
+    bar("barDur", d.chip[0], d.chip[1]);
+    bar("barMol", m.chip[0], m.chip[1]);
+    if (cl.clcr !== null) bar("barClcr", cl.clcr < 15 ? "k4" : cl.clcr < 30 ? "k3" : cl.clcr <= 50 ? "k2" : "k1", nf(cl.clcr, 0) + " mL/min" + (s.dial ? " · dialisi" : ""));
+    else bar("barClcr", s.dial ? "k4" : "kx", s.dial ? "dialisi" : "—");
+  }
+
+  document.addEventListener("input", disegna);
+  document.addEventListener("change", disegna);
+  el("azzera").addEventListener("click", function () {
+    var ins = document.querySelectorAll("input, select");
+    for (var i = 0; i < ins.length; i++) {
+      if (ins[i].type === "checkbox" || ins[i].type === "radio") ins[i].checked = false;
+      else ins[i].value = "";
+    }
+    disegna();
+    window.scrollTo(0, 0);
+  });
+
+  window.DURATA_MOTORE = {
+    durata:function (s) { return durata(pulisci(s)); },
+    clearance:function (s) { return clearance(pulisci(s)); },
+    EDOXABAN_15_29:EDOXABAN_15_29
+  };
+  disegna();
+})();
+</script>
+<script data-iphone="web">
+// Solo da un indirizzo https, cioe' dalla pagina pubblicata: aperto come file
+// il tool non cerca ne' manifest ne' service worker, che accanto al file non
+// ci sono. Un errore qui non deve fermare niente: e' un di piu'.
+(function(){
+if(location.protocol!=="https:") return;
+try{
+  var t=document.getElementsByTagName("head")[0];
+  var m=document.createElement("link"); m.rel="manifest"; m.href="manifest.webmanifest";
+  var i=document.createElement("link"); i.rel="apple-touch-icon"; i.href="icona-180.png";
+  t.appendChild(m); t.appendChild(i);
+  if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js")["catch"](function(){});
+}catch(e){}
+})();
+</script>
+<script data-iphone="fine">document.documentElement.className+=" motore-ok";</script>
+</body>
+</html>
