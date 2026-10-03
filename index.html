@@ -438,7 +438,8 @@ html.js.motore-ko #nomotore{display:block}
     edox:  "<b>60 mg 1×/die</b>",    // Suppl. Tab. 8 (Hokusai-VTE); p. 577 nota e
     edoxR: "<b>30 mg 1×/die</b>"     // Suppl. Tab. 8: ClCr 30–50 o peso <60 kg
   };
-  var SOGLIE = { edoxPeso:60, bmiAgg:30 };  // Suppl. Tab. 8; peso aggiustato come in tool_ep
+  var SOGLIE = { edoxPeso:60, bmiAgg:30 };  // Suppl. Tab. 8; dai 30 di BMI si mostra anche la clearance sul peso aggiustato
+  var SOGLIE_CG = [15, 30, 50];             // le soglie di clearance usate da reneMol
   var DOM = { eta:[18, 110], peso:[30, 250], alt:[120, 230], creat:[0.2, 15] };  // plausibilita' dello strumento, non della fonte
   var NOMI_DOM = { eta:"età (18–110 anni)", peso:"peso (30–250 kg)", alt:"altezza (120–230 cm)", creat:"creatinina (0,2–15 mg/dL)" };
   var PERS = { pNeo:"cancro attivo", pAutoimm:"malattia autoimmune", pMici:"malattia infiammatoria intestinale", pImmob:"immobilità cronica" };
@@ -483,11 +484,13 @@ html.js.motore-ko #nomotore{display:block}
     return c;
   }
 
-  // Cockcroft-Gault, come in tool_ep: sul peso aggiustato se BMI >=30 (ideale di
-  // Devine + 0,4 x eccesso) — scelta del progetto, non della fonte. Le dosi
-  // restano sul peso reale.
+  // Cockcroft-Gault sul peso REALE, che decide (decisione del medico del 03/10/2026:
+  // le linee guida non dicono quale peso; l'etichetta FDA di Xarelto 06/2025 e il
+  // consensus NHS England 2018 dicono il reale). Con BMI >=30 accanto la clearance
+  // sul peso aggiustato (ideale di Devine + 0,4 x eccesso), piu' accurata nell'obeso
+  // secondo la UK Kidney Association 2025, e l'avviso se fra le due passa una soglia.
   function clearance(s) {
-    var o = { clcr:null, bmi:null, pesoCG:null, baseCG:"", manca:[] };
+    var o = { clcr:null, bmi:null, pesoCG:null, baseCG:"", pesoAgg:null, clcrAgg:null, sogliaFra:null, manca:[] };
     if (s.peso !== null && s.alt !== null) o.bmi = s.peso / Math.pow(s.alt / 100, 2);
     if (s.eta === null) o.manca.push("età");
     if (!s.sesso) o.manca.push("sesso");
@@ -495,11 +498,17 @@ html.js.motore-ko #nomotore{display:block}
     if (s.creat === null) o.manca.push("creatinina");
     if (o.manca.length) return o;
     o.pesoCG = s.peso; o.baseCG = "reale";
+    o.clcr = ((140 - s.eta) * s.peso * (s.sesso === "f" ? 0.85 : 1)) / (72 * s.creat);
     if (o.bmi !== null && o.bmi >= SOGLIE.bmiAgg) {
       var ibw = (s.sesso === "f" ? 45.5 : 50) + 0.9 * (s.alt - 152.4);
-      if (ibw > 0 && s.peso > ibw) { o.pesoCG = ibw + 0.4 * (s.peso - ibw); o.baseCG = "aggiustato"; }
+      if (ibw > 0 && s.peso > ibw) {
+        o.pesoAgg = ibw + 0.4 * (s.peso - ibw);
+        o.clcrAgg = ((140 - s.eta) * o.pesoAgg * (s.sesso === "f" ? 0.85 : 1)) / (72 * s.creat);
+        for (var q = 0; q < SOGLIE_CG.length; q++) {
+          if ((o.clcr < SOGLIE_CG[q]) !== (o.clcrAgg < SOGLIE_CG[q])) { o.sogliaFra = SOGLIE_CG[q]; break; }
+        }
+      }
     }
-    o.clcr = ((140 - s.eta) * o.pesoCG * (s.sesso === "f" ? 0.85 : 1)) / (72 * s.creat);
     return o;
   }
 
@@ -844,8 +853,8 @@ html.js.motore-ko #nomotore{display:block}
     if (d.k === "condivisa") L.push("La decisione condivisa pesa recidiva e sanguinamento: dopo un fattore minore la recidiva a terapia sospesa è del 4,2–7,1% l'anno; un punteggio come VTE-PREDICT può aiutare, ma non è validato prospetticamente" + pg("AHA/ACC 2026, p. e1024") + ". Lo strumento non stima né l'uno né l'altro rischio.");
     if (m.rene && m.rene.length && m.k !== "asa") L.push("La fonte non dà soglie renali proprie dello schema esteso: quelle mostrate sono le soglie della molecola (Suppl. Tab. 6 e 8, schede tecniche per le eparine), come nel prontuario.");
     if (m.k === "vka" || m.k === "doacAps1" || m.k === "ebpmAps" || (m.k === "ebpm" && m.ciRene)) L.push("Il range INR della fase estesa la fonte non lo dà: " + VRF + ".");
-    L.push("Clearance di Cockcroft-Gault, sul peso aggiustato se il BMI è ≥30 (peso ideale di Devine + 0,4 × l'eccesso): scelta del progetto, la stessa del Tool EP, non della fonte. Le dosi restano sul peso reale.");
-    if (cl.clcr !== null && s.alt === null) L.push("Altezza non indicata: il BMI non si calcola e la clearance è sul peso reale; nell'obeso la sovrastima.");
+    L.push("Clearance di Cockcroft-Gault sul peso reale, che decide: le linee guida non dicono quale peso, l'etichetta FDA di Xarelto (2025) e il consensus NHS England 2018 dicono il reale. Con BMI ≥30 accanto quella sul peso aggiustato (peso ideale di Devine + 0,4 × l'eccesso), più accurata nell'obeso secondo la UK Kidney Association 2025: se fra le due passa una soglia, la scelta è clinica. Le dosi restano sul peso reale.");
+    if (cl.clcr !== null && s.alt === null) L.push("Altezza non indicata: il BMI non si calcola, e accanto alla clearance sul peso reale manca quella sul peso aggiustato, che nell'obeso è più bassa.");
     L.push("I limiti di plausibilità dei campi (età 18–110 anni, peso 30–250 kg, altezza 120–230 cm, creatinina 0,2–15 mg/dL) sono dello strumento, non della fonte.");
     return L;
   }
@@ -939,8 +948,9 @@ html.js.motore-ko #nomotore{display:block}
       hr += '<div class="rl-h">Rene <b>dialisi</b> <span class="rl-w">clearance non stimabile: mancano ' + cl.manca.join(", ") + "</span></div>";
     } else {
       hr += '<div class="rl-h">Rene <b>ClCr ' + nf(cl.clcr, 0) + " mL/min</b>" + (s.dial ? " <b>· dialisi</b>" : "") +
-            '<span class="rl-w">Cockcroft-Gault su peso ' + cl.baseCG +
-            (cl.baseCG === "aggiustato" ? " " + nf(cl.pesoCG, 0) + " kg (reale " + nf(s.peso, 0) + " kg, BMI " + nf(cl.bmi) + ")" : " " + nf(s.peso, 0) + " kg") + "</span></div>";
+            '<span class="rl-w">Cockcroft-Gault sul peso reale ' + nf(s.peso, 0) + " kg" +
+            (cl.clcrAgg !== null ? " · sul peso aggiustato " + nf(cl.pesoAgg, 0) + " kg (BMI " + nf(cl.bmi) + ") sarebbe <b>" + nf(cl.clcrAgg, 0) + " mL/min</b>" : "") + "</span></div>" +
+            (cl.sogliaFra !== null ? '<div class="rl-i rl-warn"><span class="rl-m">al confine</span><span class="rl-t">Fra la clearance sul peso reale (' + nf(cl.clcr, 0) + ") e quella sul peso aggiustato (" + nf(cl.clcrAgg, 0) + ") passa la soglia di <b>" + cl.sogliaFra + " mL/min</b>: le dosi qui sotto seguono il peso reale, la scelta è clinica.</span></div>" : "");
     }
     var ids = m.rene || [];
     for (var z = 0; z < ids.length; z++) {
