@@ -333,10 +333,10 @@ html.js.motore-ko #nomotore{display:block}
        n. 3  prima EP da fattore persistente: proseguire («is reasonable») ... 1 C-LD
        n. 4  fase estesa: DOAC, salvo controindicazione, sul VKA ............. 1 A
        n. 5  cancro, fase estesa: DOAC o EBPM sul VKA ......................... 1 A
-       n. 6  senza cancro, DOAC controindicato: VKA su aspirina o nulla ....... 1 B-R
+       n. 6  senza cancro, DOAC controindicato: VKA su acido acetilsalicilico o nulla  1 B-R
        n. 7  fase estesa: metà dose di apixaban o rivaroxaban ................ 1 A
        n. 8  prima EP da fattore minore reversibile: decisione condivisa ...... 2a B-NR
-       n. 9  anticoagulazione controindicata o rifiutata: aspirina bassa dose  2a B-R
+       n. 9  anticoagulazione controindicata o rifiutata: acido acetilsalicilico a bassa dose  2a B-R
      Tab. 9, p. e1023, letta sulla pagina cella per cella:
        maggiore reversibile  chirurgia in anestesia generale ≥30 min · ricovero per
                              malattia acuta ≥72 h costretto a letto · cesareo ·
@@ -356,7 +356,7 @@ html.js.motore-ko #nomotore{display:block}
        screening oncologico per età 1 A. e1024 n. 1–5, recidiva in terapia.
      Testo: p. e1004 APS trombotica, anticoagulazione a lungo termine; p. e1022
        recidiva 30–40% a 10 anni senza fattore; p. e1023 fattore chirurgico <1%
-       l'anno-paziente, rivaroxaban 20/10 mg e aspirina 100 mg, apixaban 5/2,5 mg,
+       l'anno-paziente, rivaroxaban 20/10 mg e acido acetilsalicilico 100 mg, apixaban 5/2,5 mg,
        DOAC nel cancro (apixaban, rivaroxaban, edoxaban); p. e1024 RENOVE, API-CAT,
        fattore minore 4,2–7,1% l'anno, VTE-PREDICT non validato.
      Definizioni, p. e982: fase iniziale i primi 3–6 mesi, fase estesa oltre 6.
@@ -369,7 +369,7 @@ html.js.motore-ko #nomotore{display:block}
                fattore minore: estesa da considerare .......................... IIa C
                NOAC a dose ridotta dopo 6 mesi, solo senza cancro ............. IIa A
                (nota e: dabigatran ed edoxaban restano a dose piena)
-               aspirina o sulodexide a chi rifiuta ogni anticoagulante orale .. IIb B
+               acido acetilsalicilico o sulodexide a chi rifiuta ogni anticoagulante orale  IIb B
        p. 579  cancro: EBPM per i primi 6 mesi ............................... IIa A
                edoxaban alternativa, senza tumore gastrointestinale ........... IIa B
                rivaroxaban alternativa, senza tumore gastrointestinale ........ IIa C
@@ -382,11 +382,11 @@ html.js.motore-ko #nomotore{display:block}
        per le eparine. */
 
   // EDOXABAN_15_29 — da aggiornare dalla scheda tecnica. Aggiornata il 30/09/2026:
-  // RCP Lixiana (EMA, rev. 27/08/2025), sez. 4.2 — 30 mg 1×/die con ClCr 15–50
+  // scheda tecnica di edoxaban (EMA, rev. 27/08/2025), sez. 4.2 — 30 mg 1×/die con ClCr 15–50
   // anche nel TEV, dopo ≥5 giorni di parenterale; <15 e dialisi non raccomandato;
   // nel TEV fra 15 e 29 nessun dato clinico (Hokusai-VTE riduceva solo fra 30 e 50).
   var EDOXABAN_15_29 = "<b>30 mg 1×/die</b>, dopo almeno 5 giorni di parenterale — ESC 2019, nota d, p. 569 " +
-    '<span class="prov prov-fonte">fonte</span>, e Lixiana, EMA, § 4.2 ' +
+    '<span class="prov prov-fonte">fonte</span>, e la scheda tecnica di edoxaban, EMA, § 4.2 ' +
     '<span class="prov prov-rcp">scheda tecnica</span> — ma nel TEV sotto 30 mL/min ' +
     "<b>mancano dati clinici</b>: Hokusai-VTE riduceva la dose solo fra 30 e 50 ed escludeva ClCr &lt;30 " +
     '<span class="prov prov-fonte">Suppl. Tab. 8</span>';
@@ -397,10 +397,10 @@ html.js.motore-ko #nomotore{display:block}
     n3: { c:"1",  l:"C-LD", p:"e1022", n:3, t:"prima EP da fattore persistente: proseguire in fase estesa, «è ragionevole»" },
     n4: { c:"1",  l:"A",    p:"e1022", n:4, t:"in fase estesa un DOAC, salvo controindicazione, preferito al VKA per ridurre il sanguinamento" },
     n5: { c:"1",  l:"A",    p:"e1022", n:5, t:"con cancro, in fase estesa DOAC o EBPM preferiti al VKA per ridurre la recidiva" },
-    n6: { c:"1",  l:"B-R",  p:"e1022", n:6, t:"senza cancro e con DOAC controindicato: VKA preferito ad aspirina o a nessuna terapia" },
+    n6: { c:"1",  l:"B-R",  p:"e1022", n:6, t:"senza cancro e con DOAC controindicato: VKA preferito all'acido acetilsalicilico o a nessuna terapia" },
     n7: { c:"1",  l:"A",    p:"e1022", n:7, t:"in fase estesa metà dose di apixaban o rivaroxaban, per ridurre il sanguinamento" },
     n8: { c:"2a", l:"B-NR", p:"e1022", n:8, t:"prima EP da fattore minore reversibile: decisione condivisa fra sospendere e proseguire" },
-    n9: { c:"2a", l:"B-R",  p:"e1022", n:9, t:"anticoagulazione controindicata o rifiutata: aspirina a basso dosaggio piuttosto che nulla" }
+    n9: { c:"2a", l:"B-R",  p:"e1022", n:9, t:"anticoagulazione controindicata o rifiutata: acido acetilsalicilico a basso dosaggio piuttosto che nulla" }
   };
   var A2 = {
     aps:    { c:"1",  l:"A",    p:"e1002", n:7 },
@@ -432,7 +432,7 @@ html.js.motore-ko #nomotore{display:block}
   var DOSI = {
     apixR: "<b>2,5 mg ×2/die</b>",   // e1022 n. 7 «metà dose»; mg dal testo pp. e1023–e1024
     apixP: "<b>5 mg ×2/die</b>",     // p. e1023 (confronto con placebo), p. e1024 (RENOVE, API-CAT)
-    rivaR: "<b>10 mg 1×/die</b>",    // p. e1023 (confronto con aspirina 100 mg), p. e1024
+    rivaR: "<b>10 mg 1×/die</b>",    // p. e1023 (confronto con acido acetilsalicilico 100 mg), p. e1024
     rivaP: "<b>20 mg 1×/die</b>",    // p. e1023, p. e1024
     dabi:  "<b>150 mg ×2/die</b>",   // ESC Suppl. Tab. 8 (RE-COVER); p. 577 nota e: non si riduce
     edox:  "<b>60 mg 1×/die</b>",    // Suppl. Tab. 8 (Hokusai-VTE); p. 577 nota e
@@ -485,7 +485,7 @@ html.js.motore-ko #nomotore{display:block}
   }
 
   // Cockcroft-Gault sul peso REALE, che decide (decisione del medico del 03/10/2026:
-  // le linee guida non dicono quale peso; l'etichetta FDA di Xarelto 06/2025 e il
+  // le linee guida non dicono quale peso; l'etichetta FDA di rivaroxaban 06/2025 e il
   // consensus NHS England 2018 dicono il reale). Con BMI >=30 accanto la clearance
   // sul peso aggiustato (ideale di Devine + 0,4 x eccesso), piu' accurata nell'obeso
   // secondo la UK Kidney Association 2025, e l'avviso se fra le due passa una soglia.
@@ -602,7 +602,7 @@ html.js.motore-ko #nomotore{display:block}
     if (d.k === "cascata") { o.perche = "nella recidiva in corso di terapia la molecola e la dose si cambiano con le righe della recidiva (p. e1024), non con queste"; return o; }
     if (!d.estesa) {
       o.k = "nessuna"; o.chip = ["k0", "nessuna"];
-      o.perche = "con la riga 2 si sospende alla fine della fase iniziale: non c'è una fase estesa da impostare. La riga 9, l'aspirina, è per chi avrebbe proseguito";
+      o.perche = "con la riga 2 si sospende alla fine della fase iniziale: non c'è una fase estesa da impostare. La riga 9, l'acido acetilsalicilico, è per chi avrebbe proseguito";
       return o;
     }
     o.pre = { proseguire:"In fase estesa", condivisa:"Se la decisione condivisa porta a proseguire", conflitto:"Se si decide di proseguire", recidiva:"Se si prosegue" }[d.k];
@@ -612,11 +612,11 @@ html.js.motore-ko #nomotore{display:block}
     o.ciRene = ciRene && !s.ciDoac;
 
     if (s.rifiuto) {
-      o.k = "asa"; o.chip = ["k3", "aspirina"]; o.big = "Aspirina a basso dosaggio";
-      o.righe.push({ st:"si", r:A.n9, t:"anticoagulazione controindicata o rifiutata: aspirina a basso dosaggio piuttosto che nessuna terapia, per ridurre la recidiva — <b>ragionevole</b>" });
-      o.opz.push({ m:"Aspirina", d:"<b>basso dosaggio</b> — la riga non dà i mg; nei confronti citati dalla fonte l'aspirina era <b>100 mg/die</b>", pg:"AHA/ACC 2026, p. e1022 n. 9; p. e1023" });
-      o.note.push(["", "Non è un'alternativa equivalente: gli studi sull'aspirina hanno dato risultati discordanti" + pg("AHA/ACC 2026, p. e1024") + ", e il rivaroxaban, 20 o 10 mg, ha ridotto la recidiva rispetto all'aspirina 100 mg/die senza più sanguinamenti maggiori" + pg("AHA/ACC 2026, p. e1023") + "."]);
-      o.esc.push({ st:"si", r:E.asa, t:"a chi rifiuta o non tollera ogni anticoagulante orale, aspirina o sulodexide <b>possono essere considerati</b> — più debole della riga 9 AHA (2a B-R)" });
+      o.k = "asa"; o.chip = ["k3", "acido acetilsalicilico"]; o.big = "Acido acetilsalicilico a basso dosaggio";
+      o.righe.push({ st:"si", r:A.n9, t:"anticoagulazione controindicata o rifiutata: acido acetilsalicilico a basso dosaggio piuttosto che nessuna terapia, per ridurre la recidiva — <b>ragionevole</b>" });
+      o.opz.push({ m:"Acido acetilsalicilico", d:"<b>basso dosaggio</b> — la riga non dà i mg; nei confronti citati dalla fonte l'acido acetilsalicilico era <b>100 mg/die</b>", pg:"AHA/ACC 2026, p. e1022 n. 9; p. e1023" });
+      o.note.push(["", "Non è un'alternativa equivalente: gli studi sull'acido acetilsalicilico hanno dato risultati discordanti" + pg("AHA/ACC 2026, p. e1024") + ", e il rivaroxaban, 20 o 10 mg, ha ridotto la recidiva rispetto all'acido acetilsalicilico 100 mg/die senza più sanguinamenti maggiori" + pg("AHA/ACC 2026, p. e1023") + "."]);
+      o.esc.push({ st:"si", r:E.asa, t:"a chi rifiuta o non tollera ogni anticoagulante orale, acido acetilsalicilico o sulodexide <b>possono essere considerati</b> — più debole della riga 9 AHA (2a B-R)" });
       o.rene = ["asa"];
       return o;
     }
@@ -669,7 +669,7 @@ html.js.motore-ko #nomotore{display:block}
       if (s.aps1) o.righe.push({ st:"cond", r:A2.aps1, t:"un solo anticorpo antifosfolipidi: il DOAC può essere un'alternativa ragionevole al VKA" });
     } else if (ci) {
       o.k = "vka"; o.chip = ["k2", "VKA"]; o.big = "VKA (warfarin)";
-      o.righe.push({ st:"si", r:A.n6, t:"senza cancro, con il DOAC controindicato" + (o.ciRene ? " — qui dalla clearance" : "") + ": VKA piuttosto che aspirina o nessuna terapia, per ridurre la recidiva — <b>raccomandato</b>" });
+      o.righe.push({ st:"si", r:A.n6, t:"senza cancro, con il DOAC controindicato" + (o.ciRene ? " — qui dalla clearance" : "") + ": VKA piuttosto che acido acetilsalicilico o nessuna terapia, per ridurre la recidiva — <b>raccomandato</b>" });
       o.righe.push({ st:"no", r:A.n4, t:"la preferenza per il DOAC vale «salvo controindicazione»" });
       if (o.ciRene) o.note.push(["stop", "Controindicazione al DOAC dedotta dalla clearance: sotto 15 mL/min nessun DOAC è raccomandato " + S6 + "."]);
       opzVka(o);
@@ -760,7 +760,7 @@ html.js.motore-ko #nomotore{display:block}
         if (!d && c >= 30) return R("Anti-Xa", "ok", "non serve di routine a questa clearance: diventa ragionevole sotto 30 " + pgA(A2.antixa));
         return R("Anti-Xa", "warn", "con EBPM monitorarlo è <b>ragionevole</b> " + pA(A2.antixa) + pgA(A2.antixa) + " " + FNT);
       case "asa":
-        return R("Aspirina", "nd", "la fonte non dà un aggiustamento renale: " + VRF);
+        return R("Acido acetilsalicilico", "nd", "la fonte non dà un aggiustamento renale: " + VRF);
     }
     return null;
   }
@@ -853,7 +853,7 @@ html.js.motore-ko #nomotore{display:block}
     if (d.k === "condivisa") L.push("La decisione condivisa pesa recidiva e sanguinamento: dopo un fattore minore la recidiva a terapia sospesa è del 4,2–7,1% l'anno; un punteggio come VTE-PREDICT può aiutare, ma non è validato prospetticamente" + pg("AHA/ACC 2026, p. e1024") + ". Lo strumento non stima né l'uno né l'altro rischio.");
     if (m.rene && m.rene.length && m.k !== "asa") L.push("La fonte non dà soglie renali proprie dello schema esteso: quelle mostrate sono le soglie della molecola (Suppl. Tab. 6 e 8, schede tecniche per le eparine), come nel prontuario.");
     if (m.k === "vka" || m.k === "doacAps1" || m.k === "ebpmAps" || (m.k === "ebpm" && m.ciRene)) L.push("Il range INR della fase estesa la fonte non lo dà: " + VRF + ".");
-    L.push("Clearance di Cockcroft-Gault sul peso reale, che decide: le linee guida non dicono quale peso, l'etichetta FDA di Xarelto (2025) e il consensus NHS England 2018 dicono il reale. Con BMI ≥30 accanto quella sul peso aggiustato (peso ideale di Devine + 0,4 × l'eccesso), più accurata nell'obeso secondo la UK Kidney Association 2025: se fra le due passa una soglia, la scelta è clinica. Le dosi restano sul peso reale.");
+    L.push("Clearance di Cockcroft-Gault sul peso reale, che decide: le linee guida non dicono quale peso, l'etichetta FDA di rivaroxaban (2025) e il consensus NHS England 2018 dicono il reale. Con BMI ≥30 accanto quella sul peso aggiustato (peso ideale di Devine + 0,4 × l'eccesso), più accurata nell'obeso secondo la UK Kidney Association 2025: se fra le due passa una soglia, la scelta è clinica. Le dosi restano sul peso reale.");
     if (cl.clcr !== null && s.alt === null) L.push("Altezza non indicata: il BMI non si calcola, e accanto alla clearance sul peso reale manca quella sul peso aggiustato, che nell'obeso è più bassa.");
     L.push("I limiti di plausibilità dei campi (età 18–110 anni, peso 30–250 kg, altezza 120–230 cm, creatinina 0,2–15 mg/dL) sono dello strumento, non della fonte.");
     return L;
